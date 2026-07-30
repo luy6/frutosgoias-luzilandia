@@ -1,0 +1,2251 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Frutos de Goiás Luzilândia — Cardápio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;600;800&family=Inter:wght@400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --roxo-escuro:#6B2E17;
+    --roxo-vivo:#D8551E;
+    --pink:#2E86AB;
+    --creme:#FFF6E8;
+    --verde:#C1272D;
+    --mel:#F2C14E;
+    --texto-claro:#FFF6E8;
+    --texto-escuro:#6B2E17;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--creme);
+    color:var(--texto-escuro);
+    font-family:'Inter',sans-serif;
+    overflow-x:hidden;
+  }
+  h1,h2,h3{font-family:'Unbounded',sans-serif;}
+  .mono{font-family:'Space Mono',monospace;}
+
+  /* ---------- HERO ---------- */
+  .hero{
+    position:relative;
+    background:radial-gradient(circle at 30% 20%, var(--roxo-vivo), var(--roxo-escuro) 65%);
+    color:var(--texto-claro);
+    padding:70px 24px 110px;
+    text-align:center;
+    overflow:hidden;
+  }
+  .hero::before, .hero::after{
+    content:"";
+    position:absolute;
+    border-radius:50%;
+    filter:blur(2px);
+    animation:flutuar 7s ease-in-out infinite;
+  }
+  .hero::before{
+    width:220px;height:220px;
+    background:var(--pink);
+    opacity:.25;
+    top:-60px; left:-60px;
+  }
+  .hero::after{
+    width:160px;height:160px;
+    background:var(--mel);
+    opacity:.2;
+    bottom:-40px; right:-30px;
+    animation-delay:1.5s;
+  }
+  @keyframes flutuar{
+    0%,100%{transform:translateY(0);}
+    50%{transform:translateY(-14px);}
+  }
+  .eyebrow{
+    display:inline-block;
+    font-family:'Space Mono',monospace;
+    font-size:.7rem;
+    letter-spacing:.15em;
+    text-transform:uppercase;
+    background:rgba(255,255,255,.1);
+    border:1px solid rgba(255,255,255,.25);
+    padding:6px 14px;
+    border-radius:999px;
+    margin-bottom:22px;
+  }
+  .hero h1{
+    font-size:2.6rem;
+    font-weight:800;
+    line-height:1.05;
+    margin-bottom:14px;
+    position:relative;
+    z-index:2;
+  }
+  .hero h1 span{color:var(--mel);}
+  .hero p{
+    max-width:420px;
+    margin:0 auto;
+    opacity:.85;
+    font-size:.98rem;
+    position:relative;
+    z-index:2;
+  }
+
+  /* bowl graphic */
+  .bowl-wrap{
+    position:relative;
+    width:190px;height:190px;
+    margin:34px auto 0;
+    z-index:2;
+  }
+  .bowl{
+    position:absolute; inset:0;
+    border-radius:50%;
+    background:
+      radial-gradient(circle at 35% 30%, #b25a2e, #3a1a0d 70%);
+    box-shadow: inset 0 -14px 24px rgba(0,0,0,.4), 0 18px 30px rgba(0,0,0,.35);
+  }
+  .topping{
+    position:absolute;
+    border-radius:50%;
+  }
+  .t1{width:26px;height:16px;background:#F2C14E;top:28%;left:22%;transform:rotate(-15deg);border-radius:50%;}
+  .t2{width:20px;height:20px;background:#2E86AB;top:38%;right:20%;}
+  .t3{width:34px;height:12px;background:#C1272D;bottom:30%;left:30%;border-radius:8px;transform:rotate(10deg);}
+  .t4{width:16px;height:16px;background:#FFF6E8;top:22%;right:34%;opacity:.9;}
+
+  /* ---------- NAV categorias ---------- */
+  .cat-nav{
+    display:flex;
+    gap:10px;
+    overflow-x:auto;
+    padding:16px 20px;
+    background:rgba(255,246,232,.75);
+    backdrop-filter:blur(14px);
+    -webkit-backdrop-filter:blur(14px);
+    position:sticky;
+    top:0;
+    z-index:10;
+    box-shadow:0 1px 0 rgba(107,46,23,.08), 0 8px 24px -12px rgba(107,46,23,.15);
+    scrollbar-width:none;
+  }
+  .cat-nav::-webkit-scrollbar{display:none;}
+  .cat-btn{
+    flex:0 0 auto;
+    font-family:'Unbounded',sans-serif;
+    font-size:.76rem;
+    font-weight:600;
+    padding:10px 18px;
+    border-radius:999px;
+    border:1.5px solid rgba(107,46,23,.18);
+    background:#fff;
+    color:var(--roxo-escuro);
+    cursor:pointer;
+    white-space:nowrap;
+    transition:.2s ease;
+    box-shadow:0 1px 2px rgba(107,46,23,.06);
+  }
+  .cat-btn.active, .cat-btn:hover{
+    background:linear-gradient(135deg, var(--roxo-vivo), var(--roxo-escuro));
+    border-color:transparent;
+    color:var(--creme);
+    box-shadow:0 6px 16px -4px rgba(107,46,23,.45);
+    transform:translateY(-1px);
+  }
+
+  /* ---------- SEÇÕES / CARDS ---------- */
+  main{max-width:720px;margin:0 auto;padding:36px 20px 80px;}
+  .section{margin-bottom:52px;}
+  .section-head{
+    display:flex;
+    align-items:baseline;
+    gap:10px;
+    margin-bottom:16px;
+    padding-bottom:0;
+  }
+  .section-head h2{
+    font-size:1.4rem;
+    color:var(--roxo-escuro);
+    position:relative;
+    padding-bottom:8px;
+  }
+  .section-head h2::after{
+    content:"";
+    position:absolute;
+    left:0; bottom:0;
+    width:36px; height:4px;
+    border-radius:4px;
+    background:linear-gradient(90deg, var(--roxo-vivo), var(--mel));
+  }
+  .section-head small{font-family:'Space Mono',monospace;font-size:.72rem;opacity:.5;}
+
+  .item{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:16px;
+    padding:16px 16px;
+    margin-bottom:10px;
+    background:#fff;
+    border:1.5px solid rgba(107,46,23,.08);
+    border-radius:16px;
+    box-shadow:0 2px 8px -4px rgba(107,46,23,.1);
+    opacity:0;
+    transform:translateY(14px);
+    animation:rise .5s ease forwards;
+    cursor:pointer;
+    transition:box-shadow .18s ease, border-color .18s ease, transform .18s ease, background .18s ease;
+    -webkit-tap-highlight-color:transparent;
+  }
+  .item:hover{
+    box-shadow:0 8px 20px -6px rgba(107,46,23,.2);
+    transform:translateY(-2px);
+  }
+  .item:active{transform:scale(.985);}
+  .item.selecionado{
+    background:linear-gradient(135deg, rgba(216,85,30,.08), rgba(242,193,78,.06));
+    border-color:var(--roxo-vivo);
+    box-shadow:0 8px 22px -8px rgba(216,85,30,.35);
+  }
+  @keyframes rise{to{opacity:1;transform:none;}}
+  .item-info{display:flex; align-items:flex-start; gap:12px;}
+  .item-check{
+    flex:0 0 auto;
+    width:24px;height:24px;
+    border-radius:50%;
+    border:2px solid rgba(107,46,23,.3);
+    margin-top:2px;
+    display:flex;align-items:center;justify-content:center;
+    font-size:.75rem;
+    color:var(--creme);
+    transition:background .18s ease, border-color .18s ease, transform .18s ease;
+  }
+  .item.selecionado .item-check{
+    background:var(--roxo-vivo);
+    border-color:var(--roxo-vivo);
+    transform:scale(1.08);
+  }
+  .item-texts h3{
+    font-size:1.02rem;
+    font-weight:600;
+    color:var(--texto-escuro);
+    margin-bottom:4px;
+  }
+  .item-texts p{font-size:.83rem;opacity:.65;max-width:380px;line-height:1.4;}
+  .item-foto{
+    flex:0 0 auto;
+    width:56px;height:56px;
+    border-radius:12px;
+    object-fit:cover;
+    background:rgba(107,46,23,.06);
+  }
+  .item-foto-vazia{
+    display:flex;align-items:center;justify-content:center;
+    font-size:1.1rem;
+    border:1.5px dashed rgba(107,46,23,.25);
+    color:rgba(107,46,23,.4);
+    cursor:pointer;
+  }
+  .item-foto.editavel{cursor:pointer;}
+  .item-foto.zoomavel{cursor:zoom-in;}
+  .lightbox{
+    display:none;
+    position:fixed;
+    top:0;left:0;
+    width:100%;height:100%;
+    background:rgba(0,0,0,.85);
+    z-index:9999;
+    align-items:center;
+    justify-content:center;
+    padding:24px;
+    animation:lightboxFade .18s ease-out;
+  }
+  .lightbox.aberta{display:flex;}
+  @keyframes lightboxFade{from{opacity:0;}to{opacity:1;}}
+  .lightbox img{
+    max-width:100%;
+    max-height:85vh;
+    border-radius:16px;
+    box-shadow:0 10px 40px rgba(0,0,0,.5);
+  }
+  .lightbox-fechar{
+    position:absolute;
+    top:18px;right:18px;
+    width:40px;height:40px;
+    border-radius:50%;
+    background:rgba(255,255,255,.15);
+    color:#fff;
+    border:1px solid rgba(255,255,255,.3);
+    font-size:1.3rem;
+    line-height:1;
+    cursor:pointer;
+  }
+  .cobertura-foto{
+    width:100%;
+    max-height:180px;
+    object-fit:cover;
+    border-radius:14px;
+    margin-bottom:14px;
+  }
+  .item-right{display:flex;align-items:center;gap:10px;white-space:nowrap;}
+  .item-price{
+    font-family:'Space Mono',monospace;
+    font-weight:700;
+    font-size:1rem;
+    color:var(--roxo-vivo);
+  }
+  .qty-controls{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    background:linear-gradient(135deg, var(--roxo-vivo), var(--roxo-escuro));
+    border-radius:999px;
+    padding:5px 10px;
+    box-shadow:0 3px 10px -3px rgba(107,46,23,.5);
+  }
+  .qty-controls button{
+    background:rgba(255,255,255,.15);
+    border:none;
+    color:var(--creme);
+    font-size:1rem;
+    font-weight:700;
+    width:22px;height:22px;
+    border-radius:50%;
+    cursor:pointer;
+    line-height:1;
+    transition:background .15s ease;
+  }
+  .qty-controls button:hover{background:rgba(255,255,255,.3);}
+  .qty-controls span{
+    font-family:'Space Mono',monospace;
+    color:var(--creme);
+    font-size:.85rem;
+    min-width:14px;
+    text-align:center;
+  }
+
+  .empty-state{
+    text-align:center;
+    padding:40px 20px;
+    border:2px dashed rgba(45,10,49,.25);
+    border-radius:16px;
+    color:rgba(45,10,49,.55);
+    font-size:.9rem;
+  }
+
+  footer{
+    text-align:center;
+    padding:30px 20px 130px;
+    font-size:.78rem;
+    color:rgba(45,10,49,.5);
+    font-family:'Space Mono',monospace;
+  }
+
+  /* ---------- CARRINHO / WHATSAPP ---------- */
+  .cart-bar{
+    position:fixed;
+    left:16px; right:16px; bottom:16px;
+    max-width:688px;
+    margin:0 auto;
+    background:linear-gradient(135deg, rgba(107,46,23,.92), rgba(216,85,30,.92));
+    backdrop-filter:blur(16px);
+    -webkit-backdrop-filter:blur(16px);
+    color:var(--creme);
+    border-radius:20px;
+    padding:14px 16px 14px 20px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:14px;
+    box-shadow:0 16px 40px -10px rgba(107,46,23,.5), inset 0 1px 0 rgba(255,255,255,.1);
+    transform:translateY(140%);
+    transition:transform .3s cubic-bezier(.2,.9,.3,1.1);
+    z-index:20;
+  }
+  .cart-bar.mostrar{transform:translateY(0);}
+  .cart-info{display:flex;flex-direction:column;gap:2px;}
+  .cart-info .qtd{font-family:'Space Mono',monospace;font-size:.7rem;opacity:.7;}
+  .cart-info .total{font-family:'Unbounded',sans-serif;font-weight:700;font-size:1.15rem;}
+  .cart-send{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    background:#25D366;
+    color:#0b1f13;
+    border:none;
+    font-family:'Unbounded',sans-serif;
+    font-weight:600;
+    font-size:.82rem;
+    padding:13px 20px;
+    border-radius:999px;
+    cursor:pointer;
+    white-space:nowrap;
+    box-shadow:0 6px 16px -4px rgba(37,211,102,.6);
+    transition:transform .15s ease, box-shadow .15s ease;
+  }
+  .cart-send:hover{transform:scale(1.05); box-shadow:0 8px 20px -4px rgba(37,211,102,.7);}
+  .cart-send:active{transform:scale(.97);}
+  .cart-send svg{width:16px;height:16px;flex:0 0 auto;}
+
+  /* ---------- CHECKOUT / ENTREGA ---------- */
+  .checkout-overlay{
+    position:fixed;
+    inset:0;
+    background:rgba(15,40,25,.68);
+    display:flex;
+    align-items:flex-end;
+    justify-content:center;
+    z-index:30;
+    opacity:0;
+    pointer-events:none;
+    transition:opacity .25s ease;
+  }
+  .checkout-overlay.aberto{opacity:1;pointer-events:auto;}
+  .checkout-modal{
+    background:linear-gradient(165deg, #5c2a15, #2e150a);
+    color:var(--creme);
+    width:100%;
+    max-width:520px;
+    max-height:88vh;
+    overflow-y:auto;
+    -webkit-overflow-scrolling:touch;
+    border-radius:28px 28px 0 0;
+    padding:10px 22px 28px;
+    box-shadow:0 -20px 60px -20px rgba(0,0,0,.45);
+    transform:translateY(40px) translateZ(0);
+    transition:transform .3s cubic-bezier(.2,.9,.3,1.1);
+  }
+  .checkout-overlay.aberto .checkout-modal{transform:translateY(0) translateZ(0);}
+  .checkout-modal::before{
+    content:"";
+    display:block;
+    width:40px; height:4px;
+    border-radius:4px;
+    background:rgba(255,246,232,.3);
+    margin:8px auto 16px;
+  }
+  .checkout-head{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    margin-bottom:18px;
+  }
+  .checkout-head h2{font-size:1.3rem;color:var(--creme);}
+  .checkout-close{
+    background:rgba(255,255,255,.14);
+    border:none;
+    width:34px;height:34px;
+    border-radius:50%;
+    font-size:1rem;
+    color:var(--creme);
+    cursor:pointer;
+    transition:background .15s ease;
+  }
+  .checkout-close:hover{background:rgba(255,255,255,.22);}
+  .admin-modal .checkout-close, .cobertura-modal .checkout-close{
+    background:rgba(107,46,23,.08);
+    color:var(--roxo-escuro);
+  }
+  .admin-modal .checkout-close:hover, .cobertura-modal .checkout-close:hover{background:rgba(107,46,23,.16);}
+  .campo{margin-bottom:16px;}
+  .campo label{
+    display:block;
+    font-size:.76rem;
+    font-weight:700;
+    color:var(--mel);
+    opacity:1;
+    margin-bottom:7px;
+    font-family:'Space Mono',monospace;
+    text-transform:uppercase;
+    letter-spacing:.04em;
+  }
+  .campo input, .campo select, .campo textarea{
+    width:100%;
+    padding:13px 15px;
+    border-radius:14px;
+    border:1.5px solid rgba(255,255,255,.16);
+    background:rgba(255,255,255,.08);
+    box-shadow:none;
+    font-family:'Inter',sans-serif;
+    font-size:.95rem;
+    color:var(--creme);
+    transition:border-color .15s ease, box-shadow .15s ease, background .15s ease;
+  }
+  .campo input::placeholder, .campo textarea::placeholder{color:rgba(255,246,232,.45);}
+  .campo select option{color:#000;}
+  .campo input:focus, .campo select:focus, .campo textarea:focus{
+    outline:none;
+    border-color:var(--mel);
+    background:rgba(255,255,255,.13);
+    box-shadow:0 0 0 4px rgba(242,193,78,.18);
+  }
+  .campo textarea{resize:vertical; min-height:60px;}
+  .opcoes-toggle{display:flex; gap:10px; background:rgba(0,0,0,.2); padding:5px; border-radius:16px;}
+  .opcao-btn{
+    flex:1;
+    padding:11px 10px;
+    border-radius:12px;
+    border:none;
+    background:transparent;
+    font-family:'Unbounded',sans-serif;
+    font-size:.8rem;
+    font-weight:600;
+    color:rgba(255,246,232,.75);
+    cursor:pointer;
+    transition:.18s ease;
+  }
+  .opcao-btn.ativa{
+    background:var(--mel);
+    color:#3a2400;
+    box-shadow:0 3px 12px -3px rgba(242,193,78,.5);
+  }
+  #checkoutItens{display:flex; flex-direction:column; gap:10px;}
+  .checkout-item{
+    background:rgba(255,255,255,.07);
+    border:1.5px solid rgba(255,255,255,.12);
+    border-radius:16px;
+    padding:12px 14px;
+    box-shadow:none;
+  }
+  .checkout-item-top{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:10px;
+    margin-bottom:8px;
+  }
+  .checkout-item-top .nome{
+    font-family:'Unbounded',sans-serif;
+    font-size:.85rem;
+    font-weight:600;
+    color:var(--creme);
+  }
+  .checkout-item-top .preco{
+    font-family:'Space Mono',monospace;
+    font-size:.82rem;
+    color:var(--mel);
+    white-space:nowrap;
+  }
+  .checkout-item input{
+    width:100%;
+    padding:9px 12px;
+    border-radius:10px;
+    border:1.5px solid rgba(255,255,255,.14);
+    background:rgba(0,0,0,.18);
+    font-family:'Inter',sans-serif;
+    font-size:.85rem;
+    color:var(--creme);
+    transition:border-color .15s ease;
+  }
+  .checkout-item input:focus{outline:none; border-color:var(--mel);}
+  .checkout-item input::placeholder{color:rgba(255,246,232,.4);}
+  #blocoEndereco.escondido{display:none;}
+  #campoTroco.escondido{display:none;}
+  .checkout-resumo{
+    padding:14px 16px;
+    background:rgba(0,0,0,.2);
+    border-radius:14px;
+    margin:6px 0 16px;
+  }
+  .checkout-resumo-linhas{display:flex; flex-direction:column; gap:6px;}
+  .linha-resumo{
+    display:flex;
+    justify-content:space-between;
+    font-family:'Inter',sans-serif;
+    font-size:.85rem;
+    color:var(--creme);
+    opacity:.75;
+  }
+  .linha-resumo.total{
+    font-family:'Unbounded',sans-serif;
+    font-weight:700;
+    font-size:1.15rem;
+    color:var(--mel);
+    opacity:1;
+    padding-top:8px;
+    margin-top:2px;
+    border-top:1.5px dashed rgba(255,255,255,.2);
+  }
+  #linhaTaxaEntrega.escondida{display:none;}
+
+  .taxa-row{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:10px;
+    background:#fff;
+    border:1.5px solid rgba(107,46,23,.08);
+    border-radius:14px;
+    padding:10px 14px;
+    margin-bottom:8px;
+  }
+  .taxa-row .taxa-nome{font-family:'Unbounded',sans-serif; font-size:.85rem; font-weight:600; color:var(--roxo-escuro);}
+  .taxa-row .taxa-valor{font-family:'Space Mono',monospace; font-size:.82rem; color:var(--roxo-vivo);}
+  .taxa-row .taxa-botoes{display:flex; gap:6px;}
+
+  /* ---------- PERSONALIZAR ITEM COM COBERTURAS ---------- */
+  .cobertura-overlay{
+    position:fixed;
+    inset:0;
+    background:rgba(15,40,25,.55);
+    display:flex;
+    align-items:flex-end;
+    justify-content:center;
+    z-index:32;
+    opacity:0;
+    pointer-events:none;
+    transition:opacity .25s ease;
+  }
+  .cobertura-overlay.aberto{opacity:1; pointer-events:auto;}
+  .cobertura-modal{
+    background:var(--creme);
+    color:var(--texto-escuro);
+    width:100%;
+    max-width:480px;
+    max-height:85vh;
+    overflow-y:auto;
+    -webkit-overflow-scrolling:touch;
+    border-radius:28px 28px 0 0;
+    padding:10px 22px 26px;
+    box-shadow:0 -20px 60px -20px rgba(0,0,0,.35);
+    transform:translateY(40px) translateZ(0);
+    transition:transform .3s cubic-bezier(.2,.9,.3,1.1);
+  }
+  .cobertura-overlay.aberto .cobertura-modal{transform:translateY(0) translateZ(0);}
+  .cobertura-modal::before{
+    content:"";
+    display:block;
+    width:40px; height:4px;
+    border-radius:4px;
+    background:rgba(107,46,23,.18);
+    margin:8px auto 16px;
+  }
+  .cobertura-modal .checkout-head h2{color:var(--roxo-escuro);}
+  .cobertura-preco-base{
+    font-family:'Space Mono',monospace;
+    color:var(--roxo-vivo);
+    font-size:.85rem;
+    margin:-8px 0 18px;
+  }
+  #listaCoberturas .empty-state{padding:24px 12px;}
+  .cobertura-item{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:10px;
+    padding:11px 2px;
+    border-bottom:1px dashed rgba(107,46,23,.15);
+    cursor:pointer;
+  }
+  .cobertura-item:last-child{border-bottom:none;}
+  .cobertura-item .nome{font-size:.92rem; color:var(--texto-escuro); font-weight:500;}
+  .cobertura-item .preco{font-family:'Space Mono',monospace; font-size:.8rem; color:var(--roxo-vivo); opacity:.85; white-space:nowrap;}
+  .cobertura-check{
+    width:22px; height:22px;
+    border-radius:7px;
+    border:2px solid rgba(107,46,23,.3);
+    display:flex; align-items:center; justify-content:center;
+    font-size:.75rem; color:#fff;
+    transition:background .15s ease, border-color .15s ease;
+    flex:0 0 auto;
+  }
+  .cobertura-item.selecionada .cobertura-check{background:var(--roxo-vivo); border-color:var(--roxo-vivo);}
+  .cobertura-qtd-linha{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    margin:18px 0 6px;
+  }
+  .cobertura-qtd-linha span:first-child{
+    font-family:'Unbounded',sans-serif;
+    font-size:.85rem;
+    color:var(--roxo-escuro);
+    font-weight:600;
+  }
+  .cobertura-total-linha{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    background:rgba(216,85,30,.08);
+    border-radius:14px;
+    padding:14px 16px;
+    margin:14px 0 16px;
+    font-family:'Unbounded',sans-serif;
+    font-weight:700;
+    color:var(--roxo-escuro);
+  }
+  .cobertura-total-linha span:last-child{color:var(--roxo-vivo); font-size:1.1rem;}
+  .cobertura-remover-btn{
+    width:100%;
+    background:none;
+    border:1.5px solid #c0392b;
+    color:#c0392b;
+    padding:12px;
+    border-radius:14px;
+    font-family:'Unbounded',sans-serif;
+    font-weight:600;
+    font-size:.85rem;
+    margin-top:10px;
+    cursor:pointer;
+  }
+  .item-coberturas-tag{
+    font-size:.78rem !important;
+    color:var(--roxo-vivo) !important;
+    opacity:1 !important;
+    font-weight:600;
+    margin-top:2px;
+  }
+  .cat-admin-btn.ativa-cobertura{
+    background:var(--roxo-vivo);
+    color:#fff;
+    border-color:var(--roxo-vivo);
+  }
+
+  .checkout-confirmar{
+    width:100%;
+    background:linear-gradient(135deg, #29d16f, #1fae5a);
+    color:#062712;
+    border:none;
+    padding:16px;
+    border-radius:16px;
+    font-family:'Unbounded',sans-serif;
+    font-weight:700;
+    font-size:.92rem;
+    cursor:pointer;
+    box-shadow:0 10px 24px -8px rgba(37,211,102,.55);
+    transition:transform .15s ease, box-shadow .15s ease;
+  }
+  .checkout-confirmar:hover{transform:translateY(-1px); box-shadow:0 12px 28px -8px rgba(37,211,102,.65);}
+  .checkout-confirmar:active{transform:scale(.98);}
+  .checkout-confirmar:disabled{opacity:.5; cursor:not-allowed;}
+
+  @media (prefers-reduced-motion: reduce){
+    .item{animation:none;opacity:1;transform:none;}
+    .hero::before, .hero::after{animation:none;}
+    html{scroll-behavior:auto;}
+  }
+
+  /* ---------- ÁREA DO LOJISTA ---------- */
+  .admin-fab{
+    position:fixed;
+    top:16px; right:16px;
+    width:38px; height:38px;
+    border-radius:50%;
+    border:none;
+    background:rgba(255,255,255,.85);
+    backdrop-filter:blur(6px);
+    box-shadow:0 4px 14px -4px rgba(107,46,23,.35);
+    font-size:1rem;
+    cursor:pointer;
+    z-index:25;
+    transition:transform .15s ease;
+  }
+  .admin-fab:hover{transform:scale(1.08);}
+
+  .admin-overlay{
+    position:fixed;
+    inset:0;
+    background:rgba(15,40,25,.68);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:20px;
+    z-index:40;
+    opacity:0;
+    pointer-events:none;
+    transition:opacity .2s ease;
+  }
+  .admin-overlay.aberto{opacity:1;pointer-events:auto;}
+  #promptOverlay, #confirmOverlay, #prompt2Overlay{z-index:45;}
+  .admin-modal{
+    background:var(--creme);
+    width:100%;
+    max-width:340px;
+    max-height:85vh;
+    overflow-y:auto;
+    -webkit-overflow-scrolling:touch;
+    border-radius:20px;
+    padding:24px;
+    text-align:center;
+    box-shadow:0 20px 50px -12px rgba(0,0,0,.35);
+    transform:scale(.95) translateZ(0);
+    transition:transform .2s ease;
+  }
+  .admin-overlay.aberto .admin-modal{transform:scale(1) translateZ(0);}
+  .admin-modal h2{font-size:1.15rem;color:var(--roxo-escuro);margin-bottom:8px;}
+  .admin-modal p{font-size:.82rem;opacity:.7;margin-bottom:16px;line-height:1.4;}
+  .admin-modal input{
+    width:100%;
+    padding:12px 14px;
+    border-radius:12px;
+    border:1.5px solid rgba(107,46,23,.15);
+    background:#fff;
+    font-size:.95rem;
+    text-align:center;
+    margin-bottom:8px;
+  }
+  .admin-modal input:focus{outline:none; border-color:var(--roxo-vivo); box-shadow:0 0 0 4px rgba(216,85,30,.14);}
+  .admin-erro{
+    display:none;
+    color:#c0392b;
+    font-size:.76rem;
+    margin-bottom:8px;
+  }
+  .admin-erro.mostrar{display:block;}
+  .admin-modal-botoes{display:flex; gap:10px; margin-top:8px;}
+  .admin-modal-botoes button{
+    flex:1;
+    padding:11px;
+    border-radius:12px;
+    border:none;
+    font-family:'Unbounded',sans-serif;
+    font-weight:600;
+    font-size:.8rem;
+    cursor:pointer;
+  }
+  .admin-cancelar{background:rgba(107,46,23,.08); color:var(--roxo-escuro);}
+  .admin-entrar{background:var(--roxo-vivo); color:var(--creme);}
+
+  .admin-bar{
+    display:none;
+    align-items:center;
+    justify-content:space-between;
+    gap:10px;
+    background:var(--mel);
+    color:#3a2400;
+    font-family:'Unbounded',sans-serif;
+    font-weight:600;
+    font-size:.82rem;
+    padding:10px 16px;
+    position:fixed;
+    top:0; left:0; right:0;
+    z-index:26;
+    flex-wrap:wrap;
+    row-gap:8px;
+  }
+  .admin-bar span{flex:1 1 auto; min-width:140px;}
+  .admin-bar.mostrar{display:flex;}
+  .admin-bar button{
+    background:rgba(0,0,0,.12);
+    border:none;
+    color:#3a2400;
+    font-family:'Unbounded',sans-serif;
+    font-weight:600;
+    font-size:.76rem;
+    padding:7px 14px;
+    border-radius:999px;
+    cursor:pointer;
+    white-space:nowrap;
+  }
+  .admin-bar-botoes{display:flex; gap:8px; flex:0 0 auto;}
+  body.modo-admin .cat-nav{top:72px;}
+  body.modo-admin .admin-fab{top:88px;}
+
+  .cat-admin-btn{
+    flex:0 0 auto;
+    width:28px; height:28px;
+    border-radius:50%;
+    border:1.5px solid rgba(107,46,23,.15);
+    background:#fff;
+    font-size:.75rem;
+    cursor:pointer;
+    transition:background .15s ease, transform .15s ease;
+  }
+  .cat-admin-btn:hover{transform:scale(1.08);}
+  .cat-admin-btn.excluir{color:#c0392b; border-color:rgba(192,57,43,.25);}
+  .cat-admin-btn.excluir:hover{background:rgba(192,57,43,.08);}
+  .cat-btn.nova-cat{
+    border:1.5px dashed var(--roxo-vivo);
+    background:rgba(216,85,30,.06);
+    color:var(--roxo-vivo);
+  }
+
+  .add-item-btn{
+    font-family:'Unbounded',sans-serif;
+    font-size:.75rem;
+    font-weight:600;
+    color:var(--roxo-vivo);
+    background:rgba(216,85,30,.1);
+    border:1.5px dashed var(--roxo-vivo);
+    padding:7px 14px;
+    border-radius:999px;
+    cursor:pointer;
+    margin-left:auto;
+  }
+  .add-item-form{
+    background:#fff;
+    border:1.5px solid rgba(107,46,23,.1);
+    border-radius:14px;
+    padding:14px;
+    margin-bottom:14px;
+    display:grid;
+    gap:8px;
+  }
+  .add-item-form input{
+    width:100%;
+    padding:10px 12px;
+    border-radius:10px;
+    border:1.5px solid rgba(107,46,23,.12);
+    background:var(--creme);
+    font-size:.88rem;
+  }
+  .add-item-form input:focus{outline:none; border-color:var(--roxo-vivo);}
+  .add-item-form .linha-botoes{display:flex; gap:8px; margin-top:4px;}
+  .add-item-form .linha-botoes button{
+    flex:1;
+    padding:10px;
+    border-radius:10px;
+    border:none;
+    font-family:'Unbounded',sans-serif;
+    font-weight:600;
+    font-size:.8rem;
+    cursor:pointer;
+  }
+  .btn-salvar-item{background:var(--roxo-vivo); color:var(--creme);}
+  .btn-cancelar-item{background:rgba(107,46,23,.08); color:var(--roxo-escuro);}
+
+  .item-excluir{
+    position:absolute;
+    top:-8px; right:-8px;
+    width:26px; height:26px;
+    border-radius:50%;
+    background:#c0392b;
+    color:#fff;
+    border:2px solid var(--creme);
+    font-size:.75rem;
+    display:flex;align-items:center;justify-content:center;
+    cursor:pointer;
+    box-shadow:0 3px 8px -2px rgba(0,0,0,.4);
+  }
+  .item{position:relative;}
+</style>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+</head>
+<body>
+
+<div class="hero">
+  <span class="eyebrow">cardápio digital</span>
+  <h1>Frutos de Goiás <span>Luzilândia</span></h1>
+  <p>Açaiteria & Sorveteria — açaí puro e sorvetes montados na hora com as combinações que você escolher.</p>
+  <div class="bowl-wrap">
+    <div class="bowl"></div>
+    <div class="topping t1"></div>
+    <div class="topping t2"></div>
+    <div class="topping t3"></div>
+    <div class="topping t4"></div>
+  </div>
+</div>
+
+<button class="admin-fab" id="btnAdmin" title="Área do lojista">🔒</button>
+
+<div class="admin-overlay" id="adminOverlay">
+  <div class="admin-modal">
+    <h2>Área do lojista</h2>
+    <p>Digite a senha para adicionar ou remover itens do cardápio.</p>
+    <input type="password" id="inpSenhaAdmin" placeholder="Senha">
+    <span class="admin-erro" id="adminErro">Senha incorreta, tente de novo.</span>
+    <div class="admin-modal-botoes">
+      <button class="admin-cancelar" id="adminCancelar">Cancelar</button>
+      <button class="admin-entrar" id="adminEntrar">Entrar</button>
+    </div>
+  </div>
+</div>
+
+<div class="admin-bar" id="adminBar">
+  <span id="adminBarTexto">🔓 Modo administrador ativo</span>
+  <div class="admin-bar-botoes">
+    <button id="adminTaxas">🛵 Taxas de entrega</button>
+    <button id="adminCoberturas">🍧 Coberturas</button>
+    <button id="adminSair">Sair</button>
+  </div>
+</div>
+
+<div class="admin-overlay" id="promptOverlay">
+  <div class="admin-modal">
+    <h2 id="promptTitulo">Nome</h2>
+    <input type="text" id="promptInput" placeholder="Digite aqui...">
+    <div class="admin-modal-botoes">
+      <button class="admin-cancelar" id="promptCancelar">Cancelar</button>
+      <button class="admin-entrar" id="promptOk">Salvar</button>
+    </div>
+  </div>
+</div>
+
+<div class="admin-overlay" id="confirmOverlay">
+  <div class="admin-modal">
+    <h2>Confirmar</h2>
+    <p id="confirmTexto"></p>
+    <div class="admin-modal-botoes">
+      <button class="admin-cancelar" id="confirmCancelar">Cancelar</button>
+      <button class="admin-entrar" id="confirmOk" style="background:#c0392b;">Confirmar</button>
+    </div>
+  </div>
+</div>
+
+<div class="admin-overlay" id="prompt2Overlay">
+  <div class="admin-modal">
+    <h2 id="prompt2Titulo">Bairro</h2>
+    <input type="text" id="prompt2Input1" placeholder="Nome do bairro">
+    <input type="number" step="0.01" id="prompt2Input2" placeholder="Taxa de entrega (ex: 5.00)">
+    <div class="admin-modal-botoes">
+      <button class="admin-cancelar" id="prompt2Cancelar">Cancelar</button>
+      <button class="admin-entrar" id="prompt2Ok">Salvar</button>
+    </div>
+  </div>
+</div>
+
+<div class="admin-overlay" id="taxasOverlay">
+  <div class="admin-modal" style="max-width:380px; text-align:left;">
+    <div class="checkout-head">
+      <h2>Taxas de entrega</h2>
+      <button class="checkout-close" id="taxasFechar">✕</button>
+    </div>
+    <div id="listaTaxas"></div>
+    <button class="add-item-btn" type="button" id="btnNovoBairro" style="margin:14px auto 0; display:block;">+ Novo bairro</button>
+  </div>
+</div>
+
+<div class="admin-overlay" id="coberturasAdminOverlay">
+  <div class="admin-modal" style="max-width:380px; text-align:left;">
+    <div class="checkout-head">
+      <h2>Coberturas</h2>
+      <button class="checkout-close" id="coberturasAdminFechar">✕</button>
+    </div>
+    <div id="listaCoberturasAdmin"></div>
+    <button class="add-item-btn" type="button" id="btnNovaCobertura" style="margin:14px auto 0; display:block;">+ Nova cobertura</button>
+  </div>
+</div>
+
+<div class="cobertura-overlay" id="coberturaOverlay">
+  <div class="cobertura-modal">
+    <div class="checkout-head">
+      <h2 id="coberturaTitulo">Item</h2>
+      <button class="checkout-close" id="coberturaFechar">✕</button>
+    </div>
+    <img class="cobertura-foto" id="coberturaFoto" src="" alt="" style="display:none;">
+
+    <div class="lightbox" id="lightbox">
+      <button type="button" class="lightbox-fechar" id="lightboxFechar">✕</button>
+      <img id="lightboxImg" src="" alt="">
+    </div>
+    <p class="cobertura-preco-base" id="coberturaPrecoBase"></p>
+
+    <div class="campo">
+      <label>Escolha as coberturas</label>
+      <div id="listaCoberturas"></div>
+    </div>
+
+    <div class="cobertura-qtd-linha">
+      <span>Quantidade</span>
+      <div class="qty-controls">
+        <button type="button" id="coberturaMenos">−</button>
+        <span id="coberturaQtdTexto">1</span>
+        <button type="button" id="coberturaMais">+</button>
+      </div>
+    </div>
+
+    <div class="cobertura-total-linha">
+      <span>Total do item</span>
+      <span id="coberturaTotalItem">R$ 0,00</span>
+    </div>
+
+    <button class="checkout-confirmar" id="coberturaAdicionar">Adicionar ao carrinho</button>
+    <button class="cobertura-remover-btn" id="coberturaRemover" style="display:none;">Remover do carrinho</button>
+  </div>
+</div>
+
+<nav class="cat-nav" id="catNav"></nav>
+
+<main id="main"></main>
+
+<footer>feito com carinho • cardápio atualizado na hora</footer>
+
+<div class="cart-bar" id="cartBar">
+  <div class="cart-info">
+    <span class="qtd" id="cartQtd">0 itens</span>
+    <span class="total" id="cartTotal">R$ 0,00</span>
+  </div>
+  <button class="cart-send" id="cartSend">
+    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38a9.9 9.9 0 0 0 4.79 1.22h.01c5.46 0 9.9-4.45 9.9-9.91C21.95 6.45 17.5 2 12.04 2Zm0 18.02h-.01a8.15 8.15 0 0 1-4.15-1.14l-.3-.17-3.11.82.83-3.03-.19-.31a8.11 8.11 0 0 1-1.24-4.28c0-4.49 3.66-8.15 8.16-8.15 2.18 0 4.22.85 5.76 2.39a8.1 8.1 0 0 1 2.39 5.76c0 4.49-3.65 8.15-8.14 8.15Zm4.47-6.1c-.24-.12-1.45-.71-1.68-.8-.22-.08-.39-.12-.55.12-.16.24-.63.8-.78.97-.14.16-.29.18-.53.06-.24-.12-1.02-.38-1.94-1.2-.72-.64-1.2-1.43-1.35-1.67-.14-.24-.02-.37.11-.5.11-.11.24-.29.36-.43.12-.14.16-.24.24-.4.08-.16.04-.31-.02-.43-.06-.12-.55-1.32-.75-1.81-.2-.48-.4-.41-.55-.42h-.47c-.16 0-.43.06-.65.31-.22.24-.86.84-.86 2.04 0 1.2.88 2.36 1 2.52.12.16 1.74 2.66 4.22 3.73.59.25 1.05.4 1.41.52.59.19 1.13.16 1.56.1.48-.07 1.45-.59 1.65-1.16.2-.57.2-1.06.14-1.16-.06-.1-.22-.16-.46-.28Z"/></svg>
+    Finalizar pedido
+  </button>
+</div>
+
+<div class="checkout-overlay" id="checkoutOverlay">
+  <div class="checkout-modal">
+    <div class="checkout-head">
+      <h2>Finalizar pedido</h2>
+      <button class="checkout-close" id="checkoutClose">✕</button>
+    </div>
+
+    <div class="checkout-body">
+
+      <div class="campo">
+        <label>Seus itens</label>
+        <div id="checkoutItens"></div>
+      </div>
+
+      <div class="campo">
+        <label>Como você quer receber?</label>
+        <div class="opcoes-toggle">
+          <button type="button" class="opcao-btn ativa" data-tipo="entrega" id="btnEntrega">🛵 Entrega</button>
+          <button type="button" class="opcao-btn" data-tipo="retirada" id="btnRetirada">🏠 Retirar na loja</button>
+        </div>
+      </div>
+
+      <div class="campo">
+        <label for="inpNome">Seu nome</label>
+        <input type="text" id="inpNome" placeholder="Ex: Maria">
+      </div>
+
+      <div id="blocoEndereco">
+        <div class="campo">
+          <label for="inpRua">Endereço (rua e número)</label>
+          <input type="text" id="inpRua" placeholder="Ex: Rua das Flores, 123">
+        </div>
+        <div class="campo">
+          <label for="selBairroEntrega">Bairro</label>
+          <select id="selBairroEntrega">
+            <option value="">Selecione o bairro</option>
+          </select>
+        </div>
+        <div class="campo">
+          <label for="inpReferencia">Ponto de referência (opcional)</label>
+          <input type="text" id="inpReferencia" placeholder="Ex: perto da praça">
+        </div>
+        <div class="campo">
+          <label for="inpTelefone">Telefone (com DDD)</label>
+          <input type="tel" id="inpTelefone" placeholder="Ex: (86) 99999-9999">
+        </div>
+      </div>
+
+      <div class="campo">
+        <label for="selPagamento">Forma de pagamento</label>
+        <select id="selPagamento">
+          <option value="Pix">Pix</option>
+          <option value="Dinheiro">Dinheiro</option>
+          <option value="Cartão na entrega">Cartão na entrega</option>
+        </select>
+      </div>
+
+      <div class="campo" id="campoTroco">
+        <label for="inpTroco">Precisa de troco para quanto?</label>
+        <input type="text" id="inpTroco" placeholder="Ex: 50">
+      </div>
+
+      <div class="campo">
+        <label for="inpObs">Observações (opcional)</label>
+        <textarea id="inpObs" placeholder="Ex: sem cebola, capricha no granola..."></textarea>
+      </div>
+
+      <div class="checkout-resumo checkout-resumo-linhas">
+        <div class="linha-resumo"><span>Subtotal</span><span id="resumoSubtotal">R$ 0,00</span></div>
+        <div class="linha-resumo" id="linhaTaxaEntrega"><span>Taxa de entrega</span><span id="resumoTaxa">R$ 0,00</span></div>
+        <div class="linha-resumo total"><span>Total</span><span id="resumoTotal">R$ 0,00</span></div>
+      </div>
+      <span id="resumoQtd" style="display:none;">0 itens</span>
+
+      <button class="checkout-confirmar" id="checkoutConfirmar">Confirmar e enviar no WhatsApp</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  // Estrutura do cardápio — cada categoria vira uma seção, cada item vira uma linha.
+  const cardapio = [
+    {
+      categoria: "Bowls Clássicos",
+      itens: [
+        { nome: "Açaí (por peso)", descricao: "Escolha seus adicionais grátis — o valor final é calculado na pesagem, na hora da entrega/retirada", preco: 0 }
+      ],
+      permiteCoberturas: true
+    },
+    {
+      categoria: "Adicionais",
+      itens: []
+    },
+    {
+      categoria: "Bebidas",
+      itens: []
+    },
+    {
+      categoria: "Picolés",
+      itens: [
+        { nome: "Picolé de Morango", descricao: "Polpa de morango, cremoso", preco: 10 },
+        { nome: "Picolé de Açaí", descricao: "Açaí puro com toque de guaraná", preco: 10 },
+        { nome: "Picolé de Manga", descricao: "Polpa de manga natural", preco: 10 },
+        { nome: "Picolé de Chocolate", descricao: "Chocolate cremoso com casquinha crocante", preco: 10 }
+      ]
+    },
+    {
+      categoria: "Paletas",
+      itens: [
+        { nome: "Paleta de Chocolate com Trufas", descricao: "Recheio cremoso com trufas de chocolate, 100g", preco: 18 },
+        { nome: "Paleta de Morango com Leite Condensado", descricao: "Polpa de morango com leite condensado cremoso, 100g", preco: 18 },
+        { nome: "Paleta de Maracujá com Leite Condensado", descricao: "Polpa de maracujá com leite condensado cremoso, 100g", preco: 18 },
+        { nome: "Paleta de Coco com Trufas", descricao: "Coco cremoso com trufas de chocolate, 100g", preco: 18 },
+        { nome: "Paleta de Açaí com Leite Condensado", descricao: "Açaí puro com leite condensado cremoso, 100g", preco: 18 },
+        { nome: "Paleta Ninho Trufada", descricao: "Leite Ninho® cremoso com trufas, 100g", preco: 18 }
+      ]
+    }
+  ];
+
+  // Coberturas/adicionais que o cliente pode escolher ao montar o açaí — todas
+  // grátis, já que o açaí é vendido por peso (o valor final é calculado na pesagem).
+  // Edite pelo botão "🍧 Coberturas" no modo administrador, se precisar.
+  const coberturas = [
+    { nome: "Granola", preco: 0 },
+    { nome: "Leite em pó", preco: 0 },
+    { nome: "Leite condensado", preco: 0 },
+    { nome: "Paçoca", preco: 0 },
+    { nome: "Morango picado", preco: 0 },
+    { nome: "Chocolate granulado", preco: 0 },
+    { nome: "Nutella", preco: 0 }
+  ];
+
+  const WHATSAPP_NUMERO = "5586988445378";
+  const SENHA_ADMIN = "goias2026"; // altere aqui a senha do lojista
+
+  // Taxas de entrega por bairro — edite pelo botão
+  // "🛵 Taxas de entrega" no modo administrador (não precisa mexer no código).
+  const taxasEntrega = [
+    { bairro: "Alecrim", taxa: 5 },
+    { bairro: "Santa Luzia", taxa: 5 },
+    { bairro: "Bela Vista", taxa: 5 },
+    { bairro: "Bernado Rego", taxa: 5 },
+    { bairro: "Palestina", taxa: 4 },
+    { bairro: "Batista de Amorim", taxa: 4 },
+    { bairro: "Novo Milênio", taxa: 4 },
+    { bairro: "Mão Santa", taxa: 4 },
+    { bairro: "Nova Esperança", taxa: 4 },
+    { bairro: "Chapadinha Sul", taxa: 4 },
+    { bairro: "Chapadinha Norte", taxa: 4 },
+    { bairro: "Rural", taxa: 4 },
+    { bairro: "Centro", taxa: 3 },
+    { bairro: "Coeb", taxa: 4 }
+  ];
+
+  let modoAdmin = false;
+  let formAbertoCat = null; // índice da categoria com o formulário de "novo item" aberto
+
+  function formatarPreco(v){
+    return v.toLocaleString('pt-BR', {style:'currency', currency:'BRL'});
+  }
+
+  // carrinho guarda quantidade por chave "catIdx-itemIdx"
+  const carrinho = {};
+  // observações guarda o texto digitado pelo cliente para cada item selecionado
+  const observacoes = {};
+  // coberturas escolhidas guarda os índices de coberturas selecionadas para cada item
+  const coberturasEscolhidas = {};
+
+  function chave(catIdx, itemIdx){ return catIdx+'-'+itemIdx; }
+
+  function categoriaPermiteCoberturas(catIdx){
+    return !!(cardapio[catIdx] && cardapio[catIdx].permiteCoberturas);
+  }
+
+  function precoComCoberturas(catIdx, itemIdx){
+    const item = cardapio[catIdx].itens[itemIdx];
+    const k = chave(catIdx, itemIdx);
+    let preco = item.preco;
+    (coberturasEscolhidas[k] || []).forEach(ci => {
+      if(coberturas[ci]) preco += coberturas[ci].preco;
+    });
+    return preco;
+  }
+
+  function alterarQtd(catIdx, itemIdx, delta, ev){
+    if(ev) ev.stopPropagation();
+    const k = chave(catIdx, itemIdx);
+    const atual = carrinho[k] || 0;
+    const nova = Math.max(0, atual + delta);
+    if(nova === 0){ delete carrinho[k]; delete observacoes[k]; delete coberturasEscolhidas[k]; } else { carrinho[k] = nova; }
+    render();
+  }
+
+  function toggleItem(catIdx, itemIdx){
+    const k = chave(catIdx, itemIdx);
+    if(carrinho[k]){
+      delete carrinho[k];
+      delete observacoes[k];
+      delete coberturasEscolhidas[k];
+    } else {
+      carrinho[k] = 1;
+    }
+    render();
+  }
+
+  // ---------- ÁREA DO LOJISTA ----------
+  function abrirLoginAdmin(){
+    document.getElementById('adminOverlay').classList.add('aberto');
+    document.getElementById('adminErro').classList.remove('mostrar');
+    const inp = document.getElementById('inpSenhaAdmin');
+    inp.value = '';
+    setTimeout(() => inp.focus(), 200);
+  }
+  function fecharLoginAdmin(){
+    document.getElementById('adminOverlay').classList.remove('aberto');
+  }
+  function tentarLogin(){
+    const senha = document.getElementById('inpSenhaAdmin').value;
+    if(senha === SENHA_ADMIN){
+      modoAdmin = true;
+      document.body.classList.add('modo-admin');
+      document.getElementById('adminBar').classList.add('mostrar');
+      document.getElementById('adminBarTexto').textContent = firebaseConfigurado
+        ? '🔓 Modo administrador — sincronizado com todos os aparelhos'
+        : '🔓 Modo administrador — salvo só neste navegador (configure o Firebase para sincronizar)';
+      fecharLoginAdmin();
+      render();
+    } else {
+      document.getElementById('adminErro').classList.add('mostrar');
+    }
+  }
+  function sairModoAdmin(){
+    modoAdmin = false;
+    formAbertoCat = null;
+    document.body.classList.remove('modo-admin');
+    document.getElementById('adminBar').classList.remove('mostrar');
+    render();
+  }
+
+  function adicionarItem(catIdx){
+    const nomeInp = document.getElementById(`novoNome-${catIdx}`);
+    const descInp = document.getElementById(`novaDesc-${catIdx}`);
+    const precoInp = document.getElementById(`novoPreco-${catIdx}`);
+    const fotoInp = document.getElementById(`novaFoto-${catIdx}`);
+    const nome = nomeInp.value.trim();
+    const preco = parseFloat(precoInp.value.replace(',', '.'));
+
+    if(!nome || isNaN(preco)){
+      avisar('Preencha ao menos o nome e o preço do item.');
+      return;
+    }
+
+    cardapio[catIdx].itens.push({
+      nome: nome,
+      descricao: descInp.value.trim(),
+      preco: preco,
+      imagem: fotoInp.value.trim()
+    });
+
+    formAbertoCat = null;
+    salvarCardapio();
+    render();
+  }
+
+  function editarFotoItem(catIdx, itemIdx){
+    const item = cardapio[catIdx].itens[itemIdx];
+    abrirPrompt('Link da foto do item', item.imagem || '', (url) => {
+      item.imagem = url;
+      salvarCardapio();
+      render();
+    });
+  }
+
+  function removerItem(catIdx, itemIdx, ev){
+    if(ev) ev.stopPropagation();
+    const item = cardapio[catIdx].itens[itemIdx];
+    abrirConfirm(`Remover "${item.nome}" do cardápio?`, () => {
+      const k = chave(catIdx, itemIdx);
+      delete carrinho[k];
+      delete observacoes[k];
+      delete coberturasEscolhidas[k];
+      cardapio[catIdx].itens.splice(itemIdx, 1);
+      salvarCardapio();
+      render();
+    });
+  }
+
+  function adicionarCategoria(){
+    abrirPrompt('Nome da nova categoria', '', (nome) => {
+      cardapio.push({ categoria: nome, itens: [] });
+      salvarCardapio();
+      render();
+    });
+  }
+
+  function renomearCategoria(catIdx){
+    abrirPrompt('Novo nome da categoria', cardapio[catIdx].categoria, (novo) => {
+      cardapio[catIdx].categoria = novo;
+      salvarCardapio();
+      render();
+    });
+  }
+
+  function removerCategoria(catIdx){
+    const cat = cardapio[catIdx];
+    const aviso = cat.itens.length > 0
+      ? `Excluir a categoria "${cat.categoria}" e todos os ${cat.itens.length} itens dela?`
+      : `Excluir a categoria "${cat.categoria}"?`;
+
+    abrirConfirm(aviso, () => {
+    // remove a categoria e reindexa o carrinho/observações que apontam para categorias depois dela
+    cardapio.splice(catIdx, 1);
+
+    const novoCarrinho = {};
+    Object.keys(carrinho).forEach(k => {
+      const [c, idx] = k.split('-').map(Number);
+      if(c === catIdx) return; // itens da categoria removida saem do carrinho
+      const novoC = c > catIdx ? c - 1 : c;
+      novoCarrinho[chave(novoC, idx)] = carrinho[k];
+    });
+
+    const novasObs = {};
+    Object.keys(observacoes).forEach(k => {
+      const [c, idx] = k.split('-').map(Number);
+      if(c === catIdx) return;
+      const novoC = c > catIdx ? c - 1 : c;
+      novasObs[chave(novoC, idx)] = observacoes[k];
+    });
+
+    const novasCoberturas = {};
+    Object.keys(coberturasEscolhidas).forEach(k => {
+      const [c, idx] = k.split('-').map(Number);
+      if(c === catIdx) return;
+      const novoC = c > catIdx ? c - 1 : c;
+      novasCoberturas[chave(novoC, idx)] = coberturasEscolhidas[k];
+    });
+
+    Object.keys(carrinho).forEach(k => delete carrinho[k]);
+    Object.assign(carrinho, novoCarrinho);
+    Object.keys(observacoes).forEach(k => delete observacoes[k]);
+    Object.assign(observacoes, novasObs);
+    Object.keys(coberturasEscolhidas).forEach(k => delete coberturasEscolhidas[k]);
+    Object.assign(coberturasEscolhidas, novasCoberturas);
+
+    if(formAbertoCat === catIdx) formAbertoCat = null;
+
+    salvarCardapio();
+    render();
+    });
+  }
+
+  document.getElementById('btnAdmin').addEventListener('click', abrirLoginAdmin);
+  document.getElementById('adminCancelar').addEventListener('click', fecharLoginAdmin);
+  document.getElementById('adminEntrar').addEventListener('click', tentarLogin);
+  document.getElementById('adminSair').addEventListener('click', sairModoAdmin);
+  document.getElementById('adminOverlay').addEventListener('click', (ev) => {
+    if(ev.target.id === 'adminOverlay') fecharLoginAdmin();
+  });
+  document.getElementById('inpSenhaAdmin').addEventListener('keydown', (ev) => {
+    if(ev.key === 'Enter') tentarLogin();
+  });
+
+  // ---------- MODAIS PRÓPRIOS (substituem prompt/confirm/alert nativos) ----------
+  let promptCallback = null;
+  function abrirPrompt(titulo, valorInicial, callback){
+    document.getElementById('promptTitulo').textContent = titulo;
+    const inp = document.getElementById('promptInput');
+    inp.value = valorInicial || '';
+    promptCallback = callback;
+    document.getElementById('promptOverlay').classList.add('aberto');
+    setTimeout(() => { inp.focus(); inp.select(); }, 200);
+  }
+  function fecharPrompt(){
+    document.getElementById('promptOverlay').classList.remove('aberto');
+    promptCallback = null;
+  }
+  document.getElementById('promptCancelar').addEventListener('click', fecharPrompt);
+  document.getElementById('promptOk').addEventListener('click', () => {
+    const valor = document.getElementById('promptInput').value.trim();
+    const cb = promptCallback;
+    fecharPrompt();
+    if(cb && valor) cb(valor);
+  });
+  document.getElementById('promptInput').addEventListener('keydown', (ev) => {
+    if(ev.key === 'Enter') document.getElementById('promptOk').click();
+  });
+  document.getElementById('promptOverlay').addEventListener('click', (ev) => {
+    if(ev.target.id === 'promptOverlay') fecharPrompt();
+  });
+
+  let confirmCallback = null;
+  function abrirConfirm(mensagem, callback){
+    document.getElementById('confirmCancelar').style.display = '';
+    document.getElementById('confirmOk').textContent = 'Confirmar';
+    document.getElementById('confirmTexto').textContent = mensagem;
+    confirmCallback = callback;
+    document.getElementById('confirmOverlay').classList.add('aberto');
+  }
+  function fecharConfirm(){
+    document.getElementById('confirmOverlay').classList.remove('aberto');
+    confirmCallback = null;
+  }
+  document.getElementById('confirmCancelar').addEventListener('click', fecharConfirm);
+  document.getElementById('confirmOk').addEventListener('click', () => {
+    const cb = confirmCallback;
+    fecharConfirm();
+    if(cb) cb();
+  });
+  document.getElementById('confirmOverlay').addEventListener('click', (ev) => {
+    if(ev.target.id === 'confirmOverlay') fecharConfirm();
+  });
+
+  function avisar(mensagem){
+    document.getElementById('confirmCancelar').style.display = 'none';
+    document.getElementById('confirmOk').textContent = 'OK';
+    document.getElementById('confirmTexto').textContent = mensagem;
+    confirmCallback = null;
+    document.getElementById('confirmOverlay').classList.add('aberto');
+  }
+
+  // ---------- PROMPT DUPLO (nome + valor) — usado nas taxas de entrega ----------
+  let prompt2Callback = null;
+  function abrirPrompt2(titulo, valorNome, valorNumero, callback){
+    document.getElementById('prompt2Titulo').textContent = titulo;
+    const inp1 = document.getElementById('prompt2Input1');
+    const inp2 = document.getElementById('prompt2Input2');
+    inp1.value = valorNome || '';
+    inp2.value = (valorNumero !== undefined && valorNumero !== null) ? valorNumero : '';
+    prompt2Callback = callback;
+    document.getElementById('prompt2Overlay').classList.add('aberto');
+    setTimeout(() => { inp1.focus(); inp1.select(); }, 200);
+  }
+  function fecharPrompt2(){
+    document.getElementById('prompt2Overlay').classList.remove('aberto');
+    prompt2Callback = null;
+  }
+  document.getElementById('prompt2Cancelar').addEventListener('click', fecharPrompt2);
+  document.getElementById('prompt2Ok').addEventListener('click', () => {
+    const nome = document.getElementById('prompt2Input1').value.trim();
+    const numero = parseFloat(document.getElementById('prompt2Input2').value.replace(',', '.'));
+    const cb = prompt2Callback;
+    fecharPrompt2();
+    if(cb && nome && !isNaN(numero)) cb(nome, numero);
+  });
+  document.getElementById('prompt2Overlay').addEventListener('click', (ev) => {
+    if(ev.target.id === 'prompt2Overlay') fecharPrompt2();
+  });
+
+  // ---------- GERENCIAR TAXAS DE ENTREGA (modo administrador) ----------
+  function abrirTaxasOverlay(){
+    renderizarListaTaxas();
+    document.getElementById('taxasOverlay').classList.add('aberto');
+  }
+  function fecharTaxasOverlay(){
+    document.getElementById('taxasOverlay').classList.remove('aberto');
+  }
+
+  function renderizarListaTaxas(){
+    const lista = document.getElementById('listaTaxas');
+    lista.innerHTML = '';
+    if(taxasEntrega.length === 0){
+      lista.innerHTML = '<div class="empty-state">Nenhum bairro cadastrado ainda.</div>';
+      return;
+    }
+    taxasEntrega.forEach((t, i) => {
+      const row = document.createElement('div');
+      row.className = 'taxa-row';
+      row.innerHTML = `
+        <span class="taxa-nome">${t.bairro}</span>
+        <span class="taxa-valor">${formatarPreco(t.taxa)}</span>
+        <div class="taxa-botoes">
+          <button type="button" class="cat-admin-btn" title="Editar">✎</button>
+          <button type="button" class="cat-admin-btn excluir" title="Remover">🗑</button>
+        </div>
+      `;
+      row.querySelectorAll('button')[0].onclick = () => {
+        abrirPrompt2('Editar bairro', t.bairro, t.taxa, (nome, taxa) => {
+          taxasEntrega[i] = { bairro: nome, taxa: taxa };
+          salvarCardapio();
+          renderizarListaTaxas();
+        });
+      };
+      row.querySelectorAll('button')[1].onclick = () => {
+        abrirConfirm(`Remover o bairro "${t.bairro}" da lista de entrega?`, () => {
+          taxasEntrega.splice(i, 1);
+          salvarCardapio();
+          renderizarListaTaxas();
+        });
+      };
+      lista.appendChild(row);
+    });
+  }
+
+  document.getElementById('adminTaxas').addEventListener('click', abrirTaxasOverlay);
+  document.getElementById('taxasFechar').addEventListener('click', fecharTaxasOverlay);
+  document.getElementById('taxasOverlay').addEventListener('click', (ev) => {
+    if(ev.target.id === 'taxasOverlay') fecharTaxasOverlay();
+  });
+  document.getElementById('btnNovoBairro').addEventListener('click', () => {
+    abrirPrompt2('Novo bairro', '', '', (nome, taxa) => {
+      taxasEntrega.push({ bairro: nome, taxa: taxa });
+      salvarCardapio();
+      renderizarListaTaxas();
+    });
+  });
+
+  // ---------- GERENCIAR COBERTURAS (catálogo global, modo administrador) ----------
+  function abrirCoberturasAdminOverlay(){
+    renderizarListaCoberturasAdmin();
+    document.getElementById('coberturasAdminOverlay').classList.add('aberto');
+  }
+  function fecharCoberturasAdminOverlay(){
+    document.getElementById('coberturasAdminOverlay').classList.remove('aberto');
+  }
+
+  function renderizarListaCoberturasAdmin(){
+    const lista = document.getElementById('listaCoberturasAdmin');
+    lista.innerHTML = '';
+    if(coberturas.length === 0){
+      lista.innerHTML = '<div class="empty-state">Nenhuma cobertura cadastrada ainda.</div>';
+      return;
+    }
+    coberturas.forEach((c, i) => {
+      const row = document.createElement('div');
+      row.className = 'taxa-row';
+      row.innerHTML = `
+        <span class="taxa-nome">${c.nome}</span>
+        <span class="taxa-valor">${c.preco > 0 ? formatarPreco(c.preco) : 'Grátis'}</span>
+        <div class="taxa-botoes">
+          <button type="button" class="cat-admin-btn" title="Editar">✎</button>
+          <button type="button" class="cat-admin-btn excluir" title="Remover">🗑</button>
+        </div>
+      `;
+      row.querySelectorAll('button')[0].onclick = () => {
+        abrirPrompt2('Editar cobertura', c.nome, c.preco, (nome, preco) => {
+          coberturas[i] = { nome: nome, preco: preco };
+          salvarCardapio();
+          renderizarListaCoberturasAdmin();
+        });
+      };
+      row.querySelectorAll('button')[1].onclick = () => {
+        abrirConfirm(`Remover a cobertura "${c.nome}"?`, () => {
+          coberturas.splice(i, 1);
+          salvarCardapio();
+          renderizarListaCoberturasAdmin();
+        });
+      };
+      lista.appendChild(row);
+    });
+  }
+
+  document.getElementById('adminCoberturas').addEventListener('click', abrirCoberturasAdminOverlay);
+  document.getElementById('coberturasAdminFechar').addEventListener('click', fecharCoberturasAdminOverlay);
+  document.getElementById('coberturasAdminOverlay').addEventListener('click', (ev) => {
+    if(ev.target.id === 'coberturasAdminOverlay') fecharCoberturasAdminOverlay();
+  });
+  document.getElementById('btnNovaCobertura').addEventListener('click', () => {
+    abrirPrompt2('Nova cobertura (preço 0 = grátis)', '', '', (nome, preco) => {
+      coberturas.push({ nome: nome, preco: preco });
+      salvarCardapio();
+      renderizarListaCoberturasAdmin();
+    });
+  });
+
+  // ---------- PERSONALIZAR ITEM COM COBERTURAS (tela do cliente) ----------
+  let coberturaCatIdx = null;
+  let coberturaItemIdx = null;
+  let coberturaSelecaoTemp = [];
+  let coberturaQtdTemp = 1;
+
+  function abrirCobertura(catIdx, itemIdx){
+    coberturaCatIdx = catIdx;
+    coberturaItemIdx = itemIdx;
+    const k = chave(catIdx, itemIdx);
+    coberturaSelecaoTemp = [...(coberturasEscolhidas[k] || [])];
+    coberturaQtdTemp = carrinho[k] || 1;
+
+    const item = cardapio[catIdx].itens[itemIdx];
+    const fotoModal = document.getElementById('coberturaFoto');
+    if(item.imagem){
+      fotoModal.src = item.imagem;
+      fotoModal.alt = item.nome;
+      fotoModal.style.display = 'block';
+    } else {
+      fotoModal.style.display = 'none';
+    }
+    document.getElementById('coberturaTitulo').textContent = item.nome;
+    document.getElementById('coberturaPrecoBase').textContent = item.preco === 0
+      ? '⚖️ Vendido por peso — valor calculado na pesagem'
+      : `Preço base: ${formatarPreco(item.preco)}`;
+    document.getElementById('coberturaRemover').style.display = (carrinho[k] > 0) ? 'block' : 'none';
+    renderizarListaCoberturas();
+    atualizarCoberturaQtdETotal();
+    document.getElementById('coberturaOverlay').classList.add('aberto');
+  }
+  function fecharCobertura(){
+    document.getElementById('coberturaOverlay').classList.remove('aberto');
+  }
+
+  function renderizarListaCoberturas(){
+    const lista = document.getElementById('listaCoberturas');
+    lista.innerHTML = '';
+    if(coberturas.length === 0){
+      lista.innerHTML = '<div class="empty-state">Nenhuma cobertura cadastrada ainda.</div>';
+      return;
+    }
+    coberturas.forEach((c, i) => {
+      const selecionada = coberturaSelecaoTemp.includes(i);
+      const row = document.createElement('div');
+      row.className = 'cobertura-item' + (selecionada ? ' selecionada' : '');
+      row.innerHTML = `
+        <div style="display:flex;align-items:center;gap:10px;">
+          <div class="cobertura-check">${selecionada ? '✓' : ''}</div>
+          <span class="nome">${c.nome}</span>
+        </div>
+        <span class="preco">${c.preco > 0 ? '+ ' + formatarPreco(c.preco) : 'Grátis'}</span>
+      `;
+      row.onclick = () => {
+        const idx = coberturaSelecaoTemp.indexOf(i);
+        if(idx === -1) coberturaSelecaoTemp.push(i); else coberturaSelecaoTemp.splice(idx, 1);
+        renderizarListaCoberturas();
+        atualizarCoberturaQtdETotal();
+      };
+      lista.appendChild(row);
+    });
+  }
+
+  function atualizarCoberturaQtdETotal(){
+    document.getElementById('coberturaQtdTexto').textContent = coberturaQtdTemp;
+    const item = cardapio[coberturaCatIdx].itens[coberturaItemIdx];
+    let precoUnit = item.preco;
+    coberturaSelecaoTemp.forEach(i => { if(coberturas[i]) precoUnit += coberturas[i].preco; });
+    const totalItem = precoUnit * coberturaQtdTemp;
+    document.getElementById('coberturaTotalItem').textContent = totalItem === 0 ? 'Definido na pesagem' : formatarPreco(totalItem);
+  }
+
+  document.getElementById('coberturaMenos').addEventListener('click', () => {
+    coberturaQtdTemp = Math.max(1, coberturaQtdTemp - 1);
+    atualizarCoberturaQtdETotal();
+  });
+  document.getElementById('coberturaMais').addEventListener('click', () => {
+    coberturaQtdTemp += 1;
+    atualizarCoberturaQtdETotal();
+  });
+  document.getElementById('coberturaFechar').addEventListener('click', fecharCobertura);
+  document.getElementById('coberturaOverlay').addEventListener('click', (ev) => {
+    if(ev.target.id === 'coberturaOverlay') fecharCobertura();
+  });
+  document.getElementById('coberturaAdicionar').addEventListener('click', () => {
+    const k = chave(coberturaCatIdx, coberturaItemIdx);
+    carrinho[k] = coberturaQtdTemp;
+    coberturasEscolhidas[k] = [...coberturaSelecaoTemp];
+    fecharCobertura();
+    render();
+  });
+  document.getElementById('coberturaRemover').addEventListener('click', () => {
+    const k = chave(coberturaCatIdx, coberturaItemIdx);
+    delete carrinho[k];
+    delete coberturasEscolhidas[k];
+    delete observacoes[k];
+    fecharCobertura();
+    render();
+  });
+
+  function atualizarBarraCarrinho(){
+    const bar = document.getElementById('cartBar');
+    const qtdEl = document.getElementById('cartQtd');
+    const totalEl = document.getElementById('cartTotal');
+
+    let qtdTotal = 0, valorTotal = 0;
+    Object.keys(carrinho).forEach(k => {
+      const [catIdx, itemIdx] = k.split('-').map(Number);
+      const item = cardapio[catIdx].itens[itemIdx];
+      if(!item) return;
+      qtdTotal += carrinho[k];
+      valorTotal += carrinho[k] * item.preco;
+    });
+
+    if(qtdTotal > 0){
+      bar.classList.add('mostrar');
+    } else {
+      bar.classList.remove('mostrar');
+    }
+    qtdEl.textContent = qtdTotal + (qtdTotal===1 ? ' item' : ' itens');
+    totalEl.textContent = formatarPreco(valorTotal);
+
+    // se o checkout estiver aberto, mantém o resumo (subtotal/taxa/total) em dia
+    if(document.getElementById('checkoutOverlay').classList.contains('aberto')){
+      atualizarResumoCheckout();
+    }
+  }
+
+  function calcularSubtotal(){
+    let subtotal = 0;
+    Object.keys(carrinho).forEach(k => {
+      const [catIdx, itemIdx] = k.split('-').map(Number);
+      const item = cardapio[catIdx] && cardapio[catIdx].itens[itemIdx];
+      if(!item) return;
+      subtotal += carrinho[k] * precoComCoberturas(catIdx, itemIdx);
+    });
+    return subtotal;
+  }
+
+  function taxaSelecionada(){
+    const tipoEntrega = document.getElementById('btnEntrega').classList.contains('ativa') ? 'entrega' : 'retirada';
+    if(tipoEntrega === 'retirada') return 0;
+    const sel = document.getElementById('selBairroEntrega');
+    const idx = sel.value;
+    if(idx === '') return null; // nenhum bairro selecionado ainda
+    return taxasEntrega[Number(idx)] ? taxasEntrega[Number(idx)].taxa : 0;
+  }
+
+  function enviarWhatsapp(){
+    const linhas = [];
+    let temItemPorPeso = false;
+    Object.keys(carrinho).forEach(k => {
+      const [catIdx, itemIdx] = k.split('-').map(Number);
+      const item = cardapio[catIdx].itens[itemIdx];
+      if(!item) return;
+      const qtd = carrinho[k];
+      const precoUnit = precoComCoberturas(catIdx, itemIdx);
+      if(precoUnit === 0) temItemPorPeso = true;
+      let linha = `${qtd}x ${item.nome} — ${precoUnit === 0 ? 'valor definido na pesagem' : formatarPreco(precoUnit * qtd)}`;
+      const cobs = coberturasEscolhidas[k];
+      if(cobs && cobs.length){
+        const nomes = cobs.map(ci => coberturas[ci] ? coberturas[ci].nome : '').filter(Boolean).join(', ');
+        if(nomes) linha += `\n   adicionais (grátis): ${nomes}`;
+      }
+      if(observacoes[k] && observacoes[k].trim()){
+        linha += `\n   obs: ${observacoes[k].trim()}`;
+      }
+      linhas.push(linha);
+    });
+    if(linhas.length === 0) return;
+
+    const subtotal = calcularSubtotal();
+    const tipoEntrega = document.getElementById('btnEntrega').classList.contains('ativa') ? 'entrega' : 'retirada';
+    const nome = document.getElementById('inpNome').value.trim();
+    const telefone = document.getElementById('inpTelefone').value.trim();
+    const rua = document.getElementById('inpRua').value.trim();
+    const selBairro = document.getElementById('selBairroEntrega');
+    const bairroTxt = selBairro.value !== '' ? taxasEntrega[Number(selBairro.value)].bairro : '';
+    const referencia = document.getElementById('inpReferencia').value.trim();
+    const pagamento = document.getElementById('selPagamento').value;
+    const troco = document.getElementById('inpTroco').value.trim();
+    const obs = document.getElementById('inpObs').value.trim();
+
+    if(tipoEntrega === 'entrega' && selBairro.value === ''){
+      avisar('Selecione o bairro para calcular a taxa de entrega.');
+      return;
+    }
+
+    const taxa = taxaSelecionada() || 0;
+    const total = subtotal + taxa;
+
+    const partes = [
+      "Olá! Gostaria de fazer o seguinte pedido no *Frutos de Goiás Luzilândia*:",
+      "",
+      ...linhas
+    ];
+
+    if(temItemPorPeso){
+      partes.push("");
+      partes.push("⚖️ Tem item por peso — favor pesar e me informar o valor final.");
+    }
+
+    partes.push("", `Subtotal (itens com preço fixo): ${formatarPreco(subtotal)}`);
+
+    if(tipoEntrega === 'entrega'){
+      partes.push(`Taxa de entrega (${bairroTxt}): ${formatarPreco(taxa)}`);
+    }
+    partes.push(`*Total parcial: ${formatarPreco(total)}${temItemPorPeso ? ' + valor da pesagem' : ''}*`);
+    partes.push("");
+    partes.push(tipoEntrega === 'entrega' ? "*Tipo:* Entrega" : "*Tipo:* Retirada no local");
+
+    if(nome) partes.push(`*Nome:* ${nome}`);
+    if(telefone) partes.push(`*Telefone:* ${telefone}`);
+
+    if(tipoEntrega === 'entrega'){
+      if(rua) partes.push(`*Endereço:* ${rua}`);
+      if(bairroTxt) partes.push(`*Bairro:* ${bairroTxt}`);
+      if(referencia) partes.push(`*Referência:* ${referencia}`);
+    }
+
+    partes.push(`*Pagamento:* ${pagamento}`);
+    if(pagamento === 'Dinheiro' && troco) partes.push(`*Troco para:* R$ ${troco}`);
+    if(obs) partes.push(`*Observações:* ${obs}`);
+
+    const mensagem = partes.join("\n");
+    const url = `https://wa.me/${WHATSAPP_NUMERO}?text=${encodeURIComponent(mensagem)}`;
+    window.open(url, '_blank');
+    fecharCheckout();
+  }
+
+  function abrirCheckout(){
+    document.getElementById('checkoutOverlay').classList.add('aberto');
+    renderizarItensCheckout();
+    preencherBairrosCheckout();
+    atualizarResumoCheckout();
+  }
+  function fecharCheckout(){
+    document.getElementById('checkoutOverlay').classList.remove('aberto');
+  }
+
+  function preencherBairrosCheckout(){
+    const sel = document.getElementById('selBairroEntrega');
+    const valorAtual = sel.value;
+    sel.innerHTML = '<option value="">Selecione o bairro</option>';
+    taxasEntrega.forEach((t, i) => {
+      const opt = document.createElement('option');
+      opt.value = i;
+      opt.textContent = `${t.bairro} — ${formatarPreco(t.taxa)}`;
+      sel.appendChild(opt);
+    });
+    // mantém o bairro escolhido se ele ainda existir na lista
+    if([...sel.options].some(o => o.value === valorAtual)) sel.value = valorAtual;
+  }
+
+  function renderizarItensCheckout(){
+    const container = document.getElementById('checkoutItens');
+    container.innerHTML = '';
+    Object.keys(carrinho).forEach(k => {
+      const [catIdx, itemIdx] = k.split('-').map(Number);
+      const item = cardapio[catIdx].itens[itemIdx];
+      if(!item) return;
+      const qtd = carrinho[k];
+      const precoUnit = precoComCoberturas(catIdx, itemIdx);
+      const cobs = coberturasEscolhidas[k] || [];
+      const nomesCobs = cobs.map(ci => coberturas[ci] ? coberturas[ci].nome : '').filter(Boolean).join(', ');
+
+      const div = document.createElement('div');
+      div.className = 'checkout-item';
+      div.innerHTML = `
+        <div class="checkout-item-top">
+          <span class="nome">${qtd}x ${item.nome}${nomesCobs ? ` <small style="opacity:.7; font-weight:400;">(${nomesCobs})</small>` : ''}</span>
+          <span class="preco">${precoUnit === 0 ? '⚖️ Pesagem' : formatarPreco(precoUnit * qtd)}</span>
+        </div>
+        <input type="text" placeholder="Alguma observação nesse item? Ex: sem cebola" value="${observacoes[k] || ''}">
+      `;
+      div.querySelector('input').addEventListener('input', (ev) => {
+        observacoes[k] = ev.target.value;
+      });
+      container.appendChild(div);
+    });
+  }
+
+  function temItemPorPesoNoCarrinho(){
+    return Object.keys(carrinho).some(k => {
+      const [catIdx, itemIdx] = k.split('-').map(Number);
+      return cardapio[catIdx] && cardapio[catIdx].itens[itemIdx] && precoComCoberturas(catIdx, itemIdx) === 0;
+    });
+  }
+
+  function atualizarResumoCheckout(){
+    const subtotal = calcularSubtotal();
+    const tipoEntrega = document.getElementById('btnEntrega').classList.contains('ativa') ? 'entrega' : 'retirada';
+    const taxa = tipoEntrega === 'entrega' ? (taxaSelecionada() || 0) : 0;
+    const total = subtotal + taxa;
+    const temPeso = temItemPorPesoNoCarrinho();
+
+    document.getElementById('resumoSubtotal').textContent = formatarPreco(subtotal);
+    document.getElementById('resumoTaxa').textContent = formatarPreco(taxa);
+    document.getElementById('resumoTotal').textContent = formatarPreco(total) + (temPeso ? ' + pesagem' : '');
+    document.getElementById('linhaTaxaEntrega').classList.toggle('escondida', tipoEntrega !== 'entrega');
+  }
+
+  document.getElementById('cartSend').addEventListener('click', abrirCheckout);
+  document.getElementById('checkoutClose').addEventListener('click', fecharCheckout);
+  document.getElementById('checkoutOverlay').addEventListener('click', (ev) => {
+    if(ev.target.id === 'checkoutOverlay') fecharCheckout();
+  });
+  document.getElementById('checkoutConfirmar').addEventListener('click', enviarWhatsapp);
+
+  document.getElementById('btnEntrega').addEventListener('click', () => {
+    document.getElementById('btnEntrega').classList.add('ativa');
+    document.getElementById('btnRetirada').classList.remove('ativa');
+    document.getElementById('blocoEndereco').classList.remove('escondido');
+    atualizarResumoCheckout();
+  });
+  document.getElementById('btnRetirada').addEventListener('click', () => {
+    document.getElementById('btnRetirada').classList.add('ativa');
+    document.getElementById('btnEntrega').classList.remove('ativa');
+    document.getElementById('blocoEndereco').classList.add('escondido');
+    atualizarResumoCheckout();
+  });
+  document.getElementById('selBairroEntrega').addEventListener('change', atualizarResumoCheckout);
+  document.getElementById('selPagamento').addEventListener('change', (ev) => {
+    document.getElementById('campoTroco').classList.toggle('escondido', ev.target.value !== 'Dinheiro');
+  });
+  // estado inicial: pagamento padrão é Pix, então esconde o campo de troco
+  document.getElementById('campoTroco').classList.add('escondido');
+
+  const CHAVE_STORAGE = 'frutosGoiasLuzilandia_cardapio_v2';
+
+  // ======== FIREBASE ========
+  // Cole aqui a configuração do SEU projeto Firebase (Configurações do projeto > Seus apps > Web).
+  // Enquanto estiver com os valores de exemplo abaixo, o site funciona só com salvamento local (por navegador).
+  const firebaseConfig = {
+    apiKey: "AIzaSyAATxeKTAMPTBxd0DyuvGYPp1lIZsEE0H4",
+    authDomain: "fruto-goias-luzilandia.firebaseapp.com",
+    projectId: "fruto-goias-luzilandia",
+    storageBucket: "fruto-goias-luzilandia.firebasestorage.app",
+    messagingSenderId: "604648712147",
+    appId: "1:604648712147:web:dbf8d072f6d9a1ba7b3126"
+  };
+
+  const firebaseConfigurado = firebaseConfig.apiKey !== "COLE_AQUI_SUA_API_KEY";
+  let db = null;
+  let docCardapio = null;
+
+  if(firebaseConfigurado){
+    try{
+      firebase.initializeApp(firebaseConfig);
+      db = firebase.firestore();
+      docCardapio = db.collection('cardapio').doc('principal');
+
+      // Sincronização em tempo real: qualquer alteração salva na nuvem
+      // atualiza automaticamente todos os aparelhos abertos no site.
+      docCardapio.onSnapshot((snap) => {
+        if(!snap.exists) return;
+        const dados = snap.data();
+        if(Array.isArray(dados.categorias)) substituirCategorias(dados.categorias);
+        if(Array.isArray(dados.taxasEntrega)) substituirTaxas(dados.taxasEntrega);
+        if(Array.isArray(dados.coberturas)) substituirCoberturas(dados.coberturas);
+        render();
+      });
+    }catch(e){
+      console.warn('Firebase não pôde ser iniciado, usando apenas salvamento local:', e);
+    }
+  }
+
+  // Troca todo o conteúdo de `cardapio` (nomes de categorias, ordem e itens)
+  // pelos dados salvos — necessário porque categorias podem ser criadas,
+  // renomeadas ou excluídas pelo lojista.
+  function substituirCategorias(dados){
+    cardapio.length = 0;
+    dados.forEach(c => {
+      cardapio.push({
+        categoria: c.categoria || 'Categoria',
+        itens: Array.isArray(c.itens) ? c.itens : [],
+        permiteCoberturas: !!c.permiteCoberturas
+      });
+    });
+  }
+
+  // O mesmo, mas para a lista de bairros/taxas de entrega.
+  function substituirTaxas(dados){
+    taxasEntrega.length = 0;
+    dados.forEach(t => {
+      if(t && t.bairro && typeof t.taxa === 'number'){
+        taxasEntrega.push({ bairro: t.bairro, taxa: t.taxa });
+      }
+    });
+  }
+
+  // O mesmo, mas para o catálogo global de coberturas/adicionais.
+  function substituirCoberturas(dados){
+    coberturas.length = 0;
+    dados.forEach(c => {
+      if(c && c.nome && typeof c.preco === 'number'){
+        coberturas.push({ nome: c.nome, preco: c.preco });
+      }
+    });
+  }
+
+  function salvarCardapio(){
+    const dados = { categorias: cardapio, taxasEntrega: taxasEntrega, coberturas: coberturas };
+    // sempre guarda uma cópia local (funciona mesmo sem internet)
+    try{
+      localStorage.setItem(CHAVE_STORAGE, JSON.stringify(dados));
+    }catch(e){
+      console.warn('Não foi possível salvar no navegador:', e);
+    }
+    // e sincroniza na nuvem, se o Firebase estiver configurado
+    if(firebaseConfigurado && docCardapio){
+      docCardapio.set(dados).catch((e) => {
+        console.warn('Não foi possível sincronizar com a nuvem:', e);
+      });
+    }
+  }
+
+  function carregarCardapio(){
+    try{
+      const salvo = localStorage.getItem(CHAVE_STORAGE);
+      if(!salvo) return;
+      const dados = JSON.parse(salvo);
+      if(Array.isArray(dados.categorias)) substituirCategorias(dados.categorias);
+      if(Array.isArray(dados.taxasEntrega)) substituirTaxas(dados.taxasEntrega);
+      if(Array.isArray(dados.coberturas)) substituirCoberturas(dados.coberturas);
+    }catch(e){
+      console.warn('Não foi possível carregar o cardápio salvo:', e);
+    }
+  }
+  carregarCardapio();
+
+  function render(){
+    const nav = document.getElementById('catNav');
+    const main = document.getElementById('main');
+    nav.innerHTML = '';
+    main.innerHTML = '';
+
+    cardapio.forEach((cat, i) => {
+      const btn = document.createElement('button');
+      btn.className = 'cat-btn' + (i===0 ? ' active' : '');
+      btn.textContent = cat.categoria;
+      btn.onclick = () => {
+        document.getElementById('sec-'+i).scrollIntoView({behavior:'smooth', block:'start'});
+        document.querySelectorAll('.cat-btn').forEach(b=>b.classList.remove('active'));
+        btn.classList.add('active');
+      };
+      nav.appendChild(btn);
+
+      const section = document.createElement('section');
+      section.className = 'section';
+      section.id = 'sec-'+i;
+
+      const head = document.createElement('div');
+      head.className = 'section-head';
+      head.innerHTML = `<h2>${cat.categoria}</h2><small>${cat.itens.length} ${cat.itens.length===1?'item':'itens'}</small>`;
+      if(modoAdmin){
+        const renomearBtn = document.createElement('button');
+        renomearBtn.className = 'cat-admin-btn';
+        renomearBtn.type = 'button';
+        renomearBtn.title = 'Renomear categoria';
+        renomearBtn.textContent = '✎';
+        renomearBtn.onclick = () => renomearCategoria(i);
+        head.appendChild(renomearBtn);
+
+        const excluirCatBtn = document.createElement('button');
+        excluirCatBtn.className = 'cat-admin-btn excluir';
+        excluirCatBtn.type = 'button';
+        excluirCatBtn.title = 'Excluir categoria';
+        excluirCatBtn.textContent = '🗑';
+        excluirCatBtn.onclick = () => removerCategoria(i);
+        head.appendChild(excluirCatBtn);
+
+        const coberturaToggleBtn = document.createElement('button');
+        coberturaToggleBtn.className = 'cat-admin-btn' + (cat.permiteCoberturas ? ' ativa-cobertura' : '');
+        coberturaToggleBtn.type = 'button';
+        coberturaToggleBtn.title = cat.permiteCoberturas
+          ? 'Coberturas ativadas nessa categoria (toque pra desativar)'
+          : 'Ativar escolha de coberturas nessa categoria';
+        coberturaToggleBtn.textContent = '🍧';
+        coberturaToggleBtn.onclick = () => {
+          cat.permiteCoberturas = !cat.permiteCoberturas;
+          salvarCardapio();
+          render();
+        };
+        head.appendChild(coberturaToggleBtn);
+
+        const addBtn = document.createElement('button');
+        addBtn.className = 'add-item-btn';
+        addBtn.type = 'button';
+        addBtn.textContent = formAbertoCat === i ? '✕ Fechar' : '+ Adicionar item';
+        addBtn.onclick = () => { formAbertoCat = (formAbertoCat === i ? null : i); render(); };
+        head.appendChild(addBtn);
+      }
+      section.appendChild(head);
+
+      if(modoAdmin && formAbertoCat === i){
+        const form = document.createElement('div');
+        form.className = 'add-item-form';
+        form.innerHTML = `
+          <input type="text" id="novoNome-${i}" placeholder="Nome do item">
+          <input type="text" id="novaDesc-${i}" placeholder="Descrição (opcional)">
+          <input type="number" step="0.01" id="novoPreco-${i}" placeholder="Preço (ex: 12.90)">
+          <input type="text" id="novaFoto-${i}" placeholder="Link da foto (opcional)">
+          <div class="linha-botoes">
+            <button type="button" class="btn-cancelar-item">Cancelar</button>
+            <button type="button" class="btn-salvar-item">Salvar item</button>
+          </div>
+        `;
+        form.querySelector('.btn-cancelar-item').onclick = () => { formAbertoCat = null; render(); };
+        form.querySelector('.btn-salvar-item').onclick = () => adicionarItem(i);
+        section.appendChild(form);
+      }
+
+      if(cat.itens.length === 0){
+        const empty = document.createElement('div');
+        empty.className = 'empty-state';
+        empty.textContent = 'Em breve novidades nessa categoria 🍇';
+        section.appendChild(empty);
+      } else {
+        cat.itens.forEach((item, idx) => {
+          const k = chave(i, idx);
+          const qtd = carrinho[k] || 0;
+          const permiteCob = categoriaPermiteCoberturas(i);
+          const cobsEscolhidas = coberturasEscolhidas[k] || [];
+          const precoUnit = permiteCob ? precoComCoberturas(i, idx) : item.preco;
+          const row = document.createElement('div');
+          row.className = 'item' + (qtd > 0 ? ' selecionado' : '');
+          row.style.animationDelay = (idx*0.05)+'s';
+          row.onclick = () => {
+            if(permiteCob) abrirCobertura(i, idx);
+            else toggleItem(i, idx);
+          };
+          row.innerHTML = `
+            ${modoAdmin ? `<button type="button" class="item-excluir" title="Remover item">✕</button>` : ''}
+            <div class="item-info">
+              ${item.imagem
+                ? `<img class="item-foto${modoAdmin ? ' editavel' : ' zoomavel'}" src="${item.imagem}" alt="${item.nome}" title="${modoAdmin ? 'Toque para trocar a foto' : 'Toque para ampliar'}">`
+                : (modoAdmin ? `<div class="item-foto item-foto-vazia" title="Adicionar foto">📷</div>` : '')}
+              <div class="item-check">${qtd > 0 ? '✓' : ''}</div>
+              <div class="item-texts">
+                <h3>${item.nome}</h3>
+                ${item.descricao ? `<p>${item.descricao}</p>` : ''}
+                ${cobsEscolhidas.length ? `<p class="item-coberturas-tag">+ ${cobsEscolhidas.map(ci => coberturas[ci] ? coberturas[ci].nome : '').filter(Boolean).join(', ')}</p>` : ''}
+              </div>
+            </div>
+            <div class="item-right">
+              ${qtd > 0 ? `
+                <div class="qty-controls">
+                  <button type="button" data-acao="menos">−</button>
+                  <span>${qtd}</span>
+                  <button type="button" data-acao="mais">+</button>
+                </div>
+              ` : ''}
+              <div class="item-price">${(permiteCob && item.preco === 0) ? 'Pesagem' : formatarPreco(precoUnit)}</div>
+            </div>
+          `;
+          if(qtd > 0){
+            row.querySelector('[data-acao="menos"]').onclick = (ev) => alterarQtd(i, idx, -1, ev);
+            row.querySelector('[data-acao="mais"]').onclick = (ev) => alterarQtd(i, idx, 1, ev);
+          }
+          if(modoAdmin){
+            row.querySelector('.item-excluir').onclick = (ev) => removerItem(i, idx, ev);
+            const fotoEl = row.querySelector('.item-foto');
+            if(fotoEl) fotoEl.onclick = (ev) => { ev.stopPropagation(); editarFotoItem(i, idx); };
+          }
+          section.appendChild(row);
+        });
+      }
+
+      main.appendChild(section);
+    });
+
+    if(modoAdmin){
+      const novaCatBtn = document.createElement('button');
+      novaCatBtn.className = 'cat-btn nova-cat';
+      novaCatBtn.type = 'button';
+      novaCatBtn.textContent = '+ Nova categoria';
+      novaCatBtn.onclick = adicionarCategoria;
+      nav.appendChild(novaCatBtn);
+    }
+
+    atualizarBarraCarrinho();
+  }
+
+  document.addEventListener('click', (ev) => {
+    const fotoEl = ev.target.closest('.item-foto.zoomavel');
+    if(fotoEl && !modoAdmin){
+      ev.stopPropagation();
+      const src = fotoEl.getAttribute('src');
+      const alt = fotoEl.getAttribute('alt');
+      abrirLightbox(src, alt);
+    }
+  }, true);
+
+  function abrirLightbox(src, alt){
+    const lb = document.getElementById('lightbox');
+    const img = document.getElementById('lightboxImg');
+    img.src = src;
+    img.alt = alt || '';
+    lb.classList.add('aberta');
+  }
+  function fecharLightbox(){
+    document.getElementById('lightbox').classList.remove('aberta');
+  }
+  document.getElementById('lightbox').onclick = (ev) => {
+    if(ev.target.id === 'lightbox') fecharLightbox();
+  };
+  document.getElementById('lightboxFechar').onclick = fecharLightbox;
+
+  render();
+</script>
+</body>
+</html>
