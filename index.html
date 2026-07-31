@@ -1068,6 +1068,8 @@
     </div>
     <img class="cobertura-foto" id="coberturaFoto" src="" alt="" style="display:none;">
 
+    <input type="file" id="fileInputFoto" accept="image/*" style="display:none;">
+
     <div class="lightbox" id="lightbox">
       <button type="button" class="lightbox-fechar" id="lightboxFechar">✕</button>
       <img id="lightboxImg" src="" alt="">
@@ -1275,6 +1277,7 @@
 
   let modoAdmin = false;
   let formAbertoCat = null; // índice da categoria com o formulário de "novo item" aberto
+  let fotoNovoItem = {}; // guarda a foto escolhida (por índice de categoria) enquanto o formulário de novo item está aberto
 
   function formatarPreco(v){
     return v.toLocaleString('pt-BR', {style:'currency', currency:'BRL'});
@@ -1362,7 +1365,6 @@
     const nomeInp = document.getElementById(`novoNome-${catIdx}`);
     const descInp = document.getElementById(`novaDesc-${catIdx}`);
     const precoInp = document.getElementById(`novoPreco-${catIdx}`);
-    const fotoInp = document.getElementById(`novaFoto-${catIdx}`);
     const nome = nomeInp.value.trim();
     const preco = parseFloat(precoInp.value.replace(',', '.'));
 
@@ -1375,17 +1377,18 @@
       nome: nome,
       descricao: descInp.value.trim(),
       preco: preco,
-      imagem: fotoInp.value.trim()
+      imagem: fotoNovoItem[catIdx] || ''
     });
 
     formAbertoCat = null;
+    fotoNovoItem = {};
     salvarCardapio();
     render();
   }
 
   function editarFotoItem(catIdx, itemIdx){
     const item = cardapio[catIdx].itens[itemIdx];
-    abrirPrompt('Link da foto do item', item.imagem || '', (url) => {
+    escolherFoto((url) => {
       item.imagem = url;
       salvarCardapio();
       render();
@@ -2112,6 +2115,52 @@
 
   const CHAVE_STORAGE = 'frutosGoiasLuzilandia_cardapio_v2';
 
+  // ======== UPLOAD DE FOTOS (ImgBB, gratuito, sem precisar de login do cliente) ========
+  // Para ativar o upload direto da galeria, crie uma conta grátis em https://imgbb.com/,
+  // depois acesse https://api.imgbb.com/ e copie sua chave de API, colando abaixo
+  // no lugar de "COLE_AQUI_SUA_CHAVE_IMGBB".
+  const IMGBB_API_KEY = "0dcf5b66143c0c28b36d77ba2b4fca67";
+
+  // Abre a galeria do celular e, ao escolher uma foto, envia automaticamente
+  // e chama callback(url) com o link da foto já hospedada.
+  function escolherFoto(callback){
+    if(IMGBB_API_KEY === "COLE_AQUI_SUA_CHAVE_IMGBB"){
+      avisar('Upload automático ainda não configurado. Peça para configurar a chave do ImgBB no código.');
+      return;
+    }
+    const input = document.getElementById('fileInputFoto');
+    input.value = '';
+    input.onchange = () => {
+      const file = input.files && input.files[0];
+      if(!file) return;
+      enviarFotoImgBB(file, callback);
+    };
+    input.click();
+  }
+
+  function enviarFotoImgBB(file, callback){
+    avisar('Enviando foto... aguarde um instante.');
+    const fd = new FormData();
+    fd.append('image', file);
+    fetch('https://api.imgbb.com/1/upload?key=' + IMGBB_API_KEY, {
+      method: 'POST',
+      body: fd
+    })
+      .then(r => r.json())
+      .then(res => {
+        fecharConfirm();
+        if(res && res.success && res.data && res.data.url){
+          callback(res.data.url);
+        } else {
+          avisar('Não foi possível enviar a foto. Tente novamente.');
+        }
+      })
+      .catch(() => {
+        fecharConfirm();
+        avisar('Falha ao enviar a foto. Verifique a internet e tente de novo.');
+      });
+  }
+
   // ======== FIREBASE ========
   // Cole aqui a configuração do SEU projeto Firebase (Configurações do projeto > Seus apps > Web).
   // Enquanto estiver com os valores de exemplo abaixo, o site funciona só com salvamento local (por navegador).
@@ -2284,13 +2333,19 @@
           <input type="text" id="novoNome-${i}" placeholder="Nome do item">
           <input type="text" id="novaDesc-${i}" placeholder="Descrição (opcional)">
           <input type="number" step="0.01" id="novoPreco-${i}" placeholder="Preço (ex: 12.90)">
-          <input type="text" id="novaFoto-${i}" placeholder="Link da foto (opcional)">
+          <button type="button" class="add-item-btn" id="btnFotoNovoItem-${i}" style="width:100%;">${fotoNovoItem[i] ? '📷 Foto escolhida ✓ (toque para trocar)' : '📷 Escolher foto (opcional)'}</button>
           <div class="linha-botoes">
             <button type="button" class="btn-cancelar-item">Cancelar</button>
             <button type="button" class="btn-salvar-item">Salvar item</button>
           </div>
         `;
-        form.querySelector('.btn-cancelar-item').onclick = () => { formAbertoCat = null; render(); };
+        form.querySelector(`#btnFotoNovoItem-${i}`).onclick = () => {
+          escolherFoto((url) => {
+            fotoNovoItem[i] = url;
+            render();
+          });
+        };
+        form.querySelector('.btn-cancelar-item').onclick = () => { formAbertoCat = null; fotoNovoItem = {}; render(); };
         form.querySelector('.btn-salvar-item').onclick = () => adicionarItem(i);
         section.appendChild(form);
       }
