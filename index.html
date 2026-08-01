@@ -1314,7 +1314,7 @@
     const atual = carrinho[k] || 0;
     const nova = Math.max(0, atual + delta);
     if(nova === 0){ delete carrinho[k]; delete observacoes[k]; delete coberturasEscolhidas[k]; } else { carrinho[k] = nova; }
-    render();
+    atualizarItemNoDom(catIdx, itemIdx);
   }
 
   function toggleItem(catIdx, itemIdx){
@@ -1326,7 +1326,7 @@
     } else {
       carrinho[k] = 1;
     }
-    render();
+    atualizarItemNoDom(catIdx, itemIdx);
   }
 
   // ---------- ÁREA DO LOJISTA ----------
@@ -1816,16 +1816,18 @@
     const k = chave(coberturaCatIdx, coberturaItemIdx);
     carrinho[k] = coberturaQtdTemp;
     coberturasEscolhidas[k] = [...coberturaSelecaoTemp];
+    const catIdx = coberturaCatIdx, itemIdx = coberturaItemIdx;
     fecharCobertura();
-    render();
+    atualizarItemNoDom(catIdx, itemIdx);
   });
   document.getElementById('coberturaRemover').addEventListener('click', () => {
     const k = chave(coberturaCatIdx, coberturaItemIdx);
     delete carrinho[k];
     delete coberturasEscolhidas[k];
     delete observacoes[k];
+    const catIdx = coberturaCatIdx, itemIdx = coberturaItemIdx;
     fecharCobertura();
-    render();
+    atualizarItemNoDom(catIdx, itemIdx);
   });
 
   function atualizarBarraCarrinho(){
@@ -2272,6 +2274,73 @@
   }
   carregarCardapio();
 
+  // Cria (ou recria) a linha de UM item do cardápio. Extraído do render()
+  // pra poder ser reaproveitado tanto na montagem inicial da tela quanto
+  // na atualização pontual de um único item (ver atualizarItemNoDom).
+  function criarItemRow(i, idx, item){
+    const k = chave(i, idx);
+    const qtd = carrinho[k] || 0;
+    const permiteCob = categoriaPermiteCoberturas(i);
+    const cobsEscolhidas = coberturasEscolhidas[k] || [];
+    const precoUnit = permiteCob ? precoComCoberturas(i, idx) : item.preco;
+    const row = document.createElement('div');
+    row.id = 'item-' + i + '-' + idx;
+    row.className = 'item' + (qtd > 0 ? ' selecionado' : '');
+    row.style.animationDelay = (idx*0.05)+'s';
+    row.onclick = () => {
+      if(permiteCob) abrirCobertura(i, idx);
+      else toggleItem(i, idx);
+    };
+    row.innerHTML = `
+      ${modoAdmin ? `<button type="button" class="item-excluir" title="Remover item">✕</button>` : ''}
+      <div class="item-info">
+        ${item.imagem
+          ? `<img class="item-foto${modoAdmin ? ' editavel' : ' zoomavel'}" src="${item.imagem}" alt="${item.nome}" title="${modoAdmin ? 'Toque para trocar a foto' : 'Toque para ampliar'}">`
+          : (modoAdmin ? `<div class="item-foto item-foto-vazia" title="Adicionar foto">📷</div>` : '')}
+        <div class="item-check">${qtd > 0 ? '✓' : ''}</div>
+        <div class="item-texts">
+          <h3>${item.nome}</h3>
+          ${item.descricao ? `<p>${item.descricao}</p>` : ''}
+          ${cobsEscolhidas.length ? `<p class="item-coberturas-tag">+ ${cobsEscolhidas.map(ci => coberturas[ci] ? coberturas[ci].nome : '').filter(Boolean).join(', ')}</p>` : ''}
+        </div>
+      </div>
+      <div class="item-right">
+        ${qtd > 0 ? `
+          <div class="qty-controls">
+            <button type="button" data-acao="menos">−</button>
+            <span>${qtd}</span>
+            <button type="button" data-acao="mais">+</button>
+          </div>
+        ` : ''}
+        <div class="item-price">${(permiteCob && item.preco === 0) ? 'Pesagem' : formatarPreco(precoUnit)}</div>
+      </div>
+    `;
+    if(qtd > 0){
+      row.querySelector('[data-acao="menos"]').onclick = (ev) => alterarQtd(i, idx, -1, ev);
+      row.querySelector('[data-acao="mais"]').onclick = (ev) => alterarQtd(i, idx, 1, ev);
+    }
+    if(modoAdmin){
+      row.querySelector('.item-excluir').onclick = (ev) => removerItem(i, idx, ev);
+      const fotoEl = row.querySelector('.item-foto');
+      if(fotoEl) fotoEl.onclick = (ev) => { ev.stopPropagation(); editarFotoItem(i, idx); };
+    }
+    return row;
+  }
+
+  // Atualiza só a linha de um item (troca de quantidade, seleção) sem
+  // reconstruir o cardápio inteiro. Isso é o que resolve a barra
+  // "Finalizar Pedido" demorando pra aparecer: antes, cada toque num
+  // item recriava TODAS as fotos e categorias da tela, um trabalho
+  // pesado que atrasava o navegador até repintar a barra fixa.
+  function atualizarItemNoDom(catIdx, itemIdx){
+    const item = cardapio[catIdx] && cardapio[catIdx].itens[itemIdx];
+    const antiga = document.getElementById('item-' + catIdx + '-' + itemIdx);
+    if(!item || !antiga){ render(); return; } // fallback de segurança
+    const nova = criarItemRow(catIdx, itemIdx, item);
+    antiga.replaceWith(nova);
+    atualizarBarraCarrinho();
+  }
+
   function render(){
     const nav = document.getElementById('catNav');
     const main = document.getElementById('main');
@@ -2367,51 +2436,7 @@
         section.appendChild(empty);
       } else {
         cat.itens.forEach((item, idx) => {
-          const k = chave(i, idx);
-          const qtd = carrinho[k] || 0;
-          const permiteCob = categoriaPermiteCoberturas(i);
-          const cobsEscolhidas = coberturasEscolhidas[k] || [];
-          const precoUnit = permiteCob ? precoComCoberturas(i, idx) : item.preco;
-          const row = document.createElement('div');
-          row.className = 'item' + (qtd > 0 ? ' selecionado' : '');
-          row.style.animationDelay = (idx*0.05)+'s';
-          row.onclick = () => {
-            if(permiteCob) abrirCobertura(i, idx);
-            else toggleItem(i, idx);
-          };
-          row.innerHTML = `
-            ${modoAdmin ? `<button type="button" class="item-excluir" title="Remover item">✕</button>` : ''}
-            <div class="item-info">
-              ${item.imagem
-                ? `<img class="item-foto${modoAdmin ? ' editavel' : ' zoomavel'}" src="${item.imagem}" alt="${item.nome}" title="${modoAdmin ? 'Toque para trocar a foto' : 'Toque para ampliar'}">`
-                : (modoAdmin ? `<div class="item-foto item-foto-vazia" title="Adicionar foto">📷</div>` : '')}
-              <div class="item-check">${qtd > 0 ? '✓' : ''}</div>
-              <div class="item-texts">
-                <h3>${item.nome}</h3>
-                ${item.descricao ? `<p>${item.descricao}</p>` : ''}
-                ${cobsEscolhidas.length ? `<p class="item-coberturas-tag">+ ${cobsEscolhidas.map(ci => coberturas[ci] ? coberturas[ci].nome : '').filter(Boolean).join(', ')}</p>` : ''}
-              </div>
-            </div>
-            <div class="item-right">
-              ${qtd > 0 ? `
-                <div class="qty-controls">
-                  <button type="button" data-acao="menos">−</button>
-                  <span>${qtd}</span>
-                  <button type="button" data-acao="mais">+</button>
-                </div>
-              ` : ''}
-              <div class="item-price">${(permiteCob && item.preco === 0) ? 'Pesagem' : formatarPreco(precoUnit)}</div>
-            </div>
-          `;
-          if(qtd > 0){
-            row.querySelector('[data-acao="menos"]').onclick = (ev) => alterarQtd(i, idx, -1, ev);
-            row.querySelector('[data-acao="mais"]').onclick = (ev) => alterarQtd(i, idx, 1, ev);
-          }
-          if(modoAdmin){
-            row.querySelector('.item-excluir').onclick = (ev) => removerItem(i, idx, ev);
-            const fotoEl = row.querySelector('.item-foto');
-            if(fotoEl) fotoEl.onclick = (ev) => { ev.stopPropagation(); editarFotoItem(i, idx); };
-          }
+          const row = criarItemRow(i, idx, item);
           section.appendChild(row);
         });
       }
