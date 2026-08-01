@@ -364,6 +364,7 @@
     box-shadow:0 16px 40px -10px rgba(107,46,23,.5), inset 0 1px 0 rgba(255,255,255,.1);
     transform:translateY(140%);
     transition:transform .3s cubic-bezier(.2,.9,.3,1.1);
+    will-change:transform;
     z-index:20;
   }
   .cart-bar.mostrar{transform:translateY(0);}
@@ -1841,11 +1842,19 @@
       valorTotal += carrinho[k] * item.preco;
     });
 
-    if(qtdTotal > 0){
-      bar.classList.add('mostrar');
-    } else {
-      bar.classList.remove('mostrar');
-    }
+    // usamos requestAnimationFrame (dobrado) pra garantir que o navegador
+    // já terminou de processar o render() pesado do cardápio antes de
+    // aplicar a transição da barra — sem isso, em celulares a barra só
+    // aparecia visualmente depois de rolar a tela ou redimensionar
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        if(qtdTotal > 0){
+          bar.classList.add('mostrar');
+        } else {
+          bar.classList.remove('mostrar');
+        }
+      });
+    });
     qtdEl.textContent = qtdTotal + (qtdTotal===1 ? ' item' : ' itens');
     totalEl.textContent = formatarPreco(valorTotal);
 
