@@ -183,6 +183,7 @@
     gap:10px;
     margin-bottom:16px;
     padding-bottom:0;
+    flex-wrap:wrap;
   }
   .section-head h2{
     font-size:1.4rem;
@@ -899,6 +900,8 @@
     transition:background .15s ease, transform .15s ease;
   }
   .cat-admin-btn:hover{transform:scale(1.08);}
+  .cat-admin-btn:disabled{opacity:.3; cursor:default;}
+  .cat-admin-btn:disabled:hover{transform:none;}
   .cat-admin-btn.excluir{color:#c0392b; border-color:rgba(192,57,43,.25);}
   .cat-admin-btn.excluir:hover{background:rgba(192,57,43,.08);}
   .cat-btn.nova-cat{
@@ -1431,6 +1434,37 @@
       salvarCardapio();
       render();
     });
+  }
+
+  // Troca a categoria catIdx de lugar com a vizinha (delta = -1 sobe, +1 desce).
+  // Como o carrinho/observações/coberturas guardam os itens por "índice da
+  // categoria-índice do item", precisamos trocar essas chaves junto —
+  // senão um item que estava no carrinho passaria a apontar pra outra
+  // categoria depois da reordenação.
+  function moverCategoria(catIdx, delta){
+    const novoIdx = catIdx + delta;
+    if(novoIdx < 0 || novoIdx >= cardapio.length) return;
+
+    [cardapio[catIdx], cardapio[novoIdx]] = [cardapio[novoIdx], cardapio[catIdx]];
+
+    function trocarChaves(obj){
+      const novo = {};
+      Object.keys(obj).forEach(k => {
+        const [c, idx] = k.split('-').map(Number);
+        let novoC = c;
+        if(c === catIdx) novoC = novoIdx;
+        else if(c === novoIdx) novoC = catIdx;
+        novo[chave(novoC, idx)] = obj[k];
+      });
+      Object.keys(obj).forEach(k => delete obj[k]);
+      Object.assign(obj, novo);
+    }
+    trocarChaves(carrinho);
+    trocarChaves(observacoes);
+    trocarChaves(coberturasEscolhidas);
+
+    salvarCardapio();
+    render();
   }
 
   function adicionarCategoria(){
@@ -2391,6 +2425,24 @@
       head.className = 'section-head';
       head.innerHTML = `<h2>${cat.categoria}</h2><small>${cat.itens.length} ${cat.itens.length===1?'item':'itens'}</small>`;
       if(modoAdmin){
+        const subirBtn = document.createElement('button');
+        subirBtn.className = 'cat-admin-btn';
+        subirBtn.type = 'button';
+        subirBtn.title = 'Mover categoria para cima';
+        subirBtn.textContent = '▲';
+        subirBtn.disabled = (i === 0);
+        subirBtn.onclick = () => moverCategoria(i, -1);
+        head.appendChild(subirBtn);
+
+        const descerBtn = document.createElement('button');
+        descerBtn.className = 'cat-admin-btn';
+        descerBtn.type = 'button';
+        descerBtn.title = 'Mover categoria para baixo';
+        descerBtn.textContent = '▼';
+        descerBtn.disabled = (i === cardapio.length - 1);
+        descerBtn.onclick = () => moverCategoria(i, 1);
+        head.appendChild(descerBtn);
+
         const renomearBtn = document.createElement('button');
         renomearBtn.className = 'cat-admin-btn';
         renomearBtn.type = 'button';
