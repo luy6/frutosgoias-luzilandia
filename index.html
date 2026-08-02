@@ -119,18 +119,35 @@
   .t4{width:16px;height:16px;background:#FFF6E8;top:22%;right:34%;opacity:.9;}
 
   /* ---------- NAV categorias ---------- */
+  .top-bar{
+    position:sticky;
+    top:0;
+    z-index:10;
+    background:rgba(255,246,232,.75);
+    backdrop-filter:blur(14px);
+    -webkit-backdrop-filter:blur(14px);
+    box-shadow:0 1px 0 rgba(107,46,23,.08), 0 8px 24px -12px rgba(107,46,23,.15);
+  }
+  .search-wrap{
+    padding:12px 20px 0 20px;
+  }
+  .search-wrap input{
+    width:100%;
+    padding:11px 16px 11px 40px;
+    border-radius:999px;
+    border:1.5px solid rgba(107,46,23,.15);
+    background:#fff url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" stroke="%236B2E17" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>') no-repeat 14px center;
+    font-family:'Inter',sans-serif;
+    font-size:.85rem;
+    color:var(--texto-escuro);
+  }
+  .search-wrap input::placeholder{color:rgba(107,46,23,.45);}
+  .search-wrap input:focus{outline:none;border-color:var(--roxo-vivo);}
   .cat-nav{
     display:flex;
     gap:10px;
     overflow-x:auto;
     padding:16px 20px;
-    background:rgba(255,246,232,.75);
-    backdrop-filter:blur(14px);
-    -webkit-backdrop-filter:blur(14px);
-    position:sticky;
-    top:0;
-    z-index:10;
-    box-shadow:0 1px 0 rgba(107,46,23,.08), 0 8px 24px -12px rgba(107,46,23,.15);
     scrollbar-width:none;
   }
   .cat-nav::-webkit-scrollbar{display:none;}
@@ -868,7 +885,7 @@
     white-space:nowrap;
   }
   .admin-bar-botoes{display:flex; gap:8px; flex:0 0 auto;}
-  body.modo-admin .cat-nav{top:72px;}
+  body.modo-admin .top-bar{top:72px;}
   body.modo-admin .admin-fab{top:88px;}
 
   .cat-admin-btn{
@@ -1102,7 +1119,12 @@
 
 <input type="file" id="fileInputFoto" accept="image/*" style="display:none;">
 
-<nav class="cat-nav" id="catNav"></nav>
+<div class="top-bar" id="topBar">
+  <div class="search-wrap">
+    <input type="text" id="inpBuscaItem" placeholder="Buscar no cardápio..." autocomplete="off">
+  </div>
+  <nav class="cat-nav" id="catNav"></nav>
+</div>
 
 <main id="main"></main>
 
@@ -2286,6 +2308,7 @@
     const row = document.createElement('div');
     row.id = 'item-' + i + '-' + idx;
     row.className = 'item' + (qtd > 0 ? ' selecionado' : '');
+    row.dataset.busca = normalizarTexto(item.nome + ' ' + (item.descricao || ''));
     row.style.animationDelay = (idx*0.05)+'s';
     row.onclick = () => {
       if(permiteCob) abrirCobertura(i, idx);
@@ -2352,6 +2375,8 @@
       btn.className = 'cat-btn' + (i===0 ? ' active' : '');
       btn.textContent = cat.categoria;
       btn.onclick = () => {
+        const inpBusca = document.getElementById('inpBuscaItem');
+        if(inpBusca && inpBusca.value){ inpBusca.value=''; aplicarFiltroBusca(); }
         document.getElementById('sec-'+i).scrollIntoView({behavior:'smooth', block:'start'});
         document.querySelectorAll('.cat-btn').forEach(b=>b.classList.remove('active'));
         btn.classList.add('active');
@@ -2454,6 +2479,37 @@
     }
 
     atualizarBarraCarrinho();
+    aplicarFiltroBusca();
+  }
+
+  // Busca por nome/descrição em todas as categorias. Não esconde a
+  // barra de categorias nem mexe no carrinho — só mostra/esconde itens
+  // (e a seção inteira, se nenhum item dela bater com a busca).
+  function aplicarFiltroBusca(){
+    const inpBusca = document.getElementById('inpBuscaItem');
+    const termo = normalizarTexto(inpBusca ? inpBusca.value.trim() : '');
+    document.querySelectorAll('#main .section').forEach(section => {
+      let algumVisivel = false;
+      section.querySelectorAll('.item').forEach(row => {
+        const bate = !termo || (row.dataset.busca || '').includes(termo);
+        row.style.display = bate ? '' : 'none';
+        if(bate) algumVisivel = true;
+      });
+      section.style.display = (termo && !algumVisivel) ? 'none' : '';
+    });
+  }
+  const inpBuscaItemEl = document.getElementById('inpBuscaItem');
+  let timeoutBusca = null;
+  if(inpBuscaItemEl){
+    inpBuscaItemEl.addEventListener('input', () => {
+      // sem debounce, cada tecla digitada disparava na hora a varredura de
+      // TODOS os itens do cardápio (mostrar/esconder + recalcular o layout
+      // da página inteira), o que atrasava até a própria letra aparecer no
+      // campo. Agora esperamos a pessoa parar de digitar por um instante
+      // antes de aplicar o filtro.
+      clearTimeout(timeoutBusca);
+      timeoutBusca = setTimeout(aplicarFiltroBusca, 200);
+    });
   }
 
   document.addEventListener('click', (ev) => {
