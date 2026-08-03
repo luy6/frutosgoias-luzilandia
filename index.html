@@ -888,8 +888,8 @@
     white-space:nowrap;
   }
   .admin-bar-botoes{display:flex; gap:8px; flex:0 0 auto;}
-  body.modo-admin .top-bar{top:72px;}
-  body.modo-admin .admin-fab{top:88px;}
+  body.modo-admin .top-bar{top:var(--admin-bar-h, 72px);}
+  body.modo-admin .admin-fab{top:calc(var(--admin-bar-h, 72px) + 16px);}
 
   .cat-admin-btn{
     flex:0 0 auto;
@@ -1367,6 +1367,20 @@
   function fecharLoginAdmin(){
     document.getElementById('adminOverlay').classList.remove('aberto');
   }
+  // A barra amarela "Modo administrador" pode quebrar em 1, 2 ou 3 linhas
+  // dependendo da largura da tela e do texto (com/sem Firebase). Por isso
+  // não dá pra usar um valor fixo de deslocamento pra barra de baixo — aqui
+  // medimos a altura real dela e guardamos numa variável CSS.
+  function ajustarOffsetAdminBar(){
+    if(!modoAdmin) return;
+    const bar = document.getElementById('adminBar');
+    if(!bar) return;
+    requestAnimationFrame(() => {
+      document.documentElement.style.setProperty('--admin-bar-h', bar.offsetHeight + 'px');
+    });
+  }
+  window.addEventListener('resize', ajustarOffsetAdminBar);
+
   function tentarLogin(){
     const senha = document.getElementById('inpSenhaAdmin').value;
     if(senha === SENHA_ADMIN){
@@ -1378,6 +1392,7 @@
         : '🔓 Modo administrador — salvo só neste navegador (configure o Firebase para sincronizar)';
       fecharLoginAdmin();
       render();
+      ajustarOffsetAdminBar();
     } else {
       document.getElementById('adminErro').classList.add('mostrar');
     }
@@ -2534,6 +2549,7 @@
 
     atualizarBarraCarrinho();
     aplicarFiltroBusca();
+    ajustarOffsetAdminBar();
   }
 
   // Busca por nome/descrição em todas as categorias. Não esconde a
